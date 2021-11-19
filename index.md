@@ -11,4 +11,4 @@ Our team name is mario
 5. Hugo
 6. Lucy
 
-
+![mario](mario.jpg)
