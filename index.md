@@ -1,5 +1,5 @@
 ---
-layout default
+layout: default
 ---
 
 # ENG1 Team Website
