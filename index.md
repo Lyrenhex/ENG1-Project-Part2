@@ -15,4 +15,4 @@ Our team name is mario
 5. Hugo
 6. Lucy
 
-![mario](/_snapshots/mario.jpg)
+![mario](/img/mario.jpg)
