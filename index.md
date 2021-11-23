@@ -1,3 +1,7 @@
+---
+layout default
+---
+
 # ENG1 Team Website
 
 ## Team Info
