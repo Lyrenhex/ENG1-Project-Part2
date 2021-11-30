@@ -14,4 +14,4 @@ website, primarily by including navigation between pages
 
 ### 26-11-2021
 
-![gantt chart for 26_11_2021](/img/gantt_26_11_2021.png)
+![gantt chart for 26_11_2021](/img/gantt_26_11_21.png)
