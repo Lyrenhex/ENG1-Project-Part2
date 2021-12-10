@@ -14,13 +14,13 @@ website, primarily by including navigation between pages
 
 ### 26-11-2021
 
-![gantt chart for 26_11_2021](/img/gantt_26_11_21.png)
+![gantt chart for 26_11_2021](/img/g_26_11_21.png)
 
 ### 3-12-2021
 
-![gantt chart for 3_12_2021](/img/gantt_26_11_21.png)
+![gantt chart for 3_12_2021](/img/g_3_12_21.png)
 
 ### 10-12-2021
 
-![gantt chart for 10_12_2021](/img/gantt_10_12_21.png)
+![gantt chart for 10_12_2021](/img/g_10_12_21.png)
 
