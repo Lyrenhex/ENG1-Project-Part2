@@ -4,11 +4,7 @@ title: "Project Snapshots"
 permalink: /snapshots
 ---
 
-testtesttesttest
-
-Snapshot 23/11/21:
-The project board has been created and we're in the middle of fleshing out the
-website, primarily by including navigation between pages
+These are the weekly snapshots for our Gantt Chart, the more full a bar is, the more complete the task is.
 
 ## Weekly Gantt Chart Snapshots
 
@@ -17,10 +13,12 @@ website, primarily by including navigation between pages
 ![gantt chart for 26_11_2021](/img/gantt_26_11_21.png)
 
 ### 3-12-2021
+The interview planning & the interview itself has been completed.
 
 ![gantt chart for 3_12_2021](/img/gantt_26_11_21.png)
 
 ### 10-12-2021
+Method Selection & Planning has been given an earlier start date as 4a is now complete, while we are waiting on the completion of 3a to begin work on 3b.
 
 ![gantt chart for 10_12_2021](/img/gantt_10_12_21.png)
 
