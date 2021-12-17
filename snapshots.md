@@ -22,3 +22,9 @@ Method Selection & Planning has been given an earlier start date as 4a is now co
 
 ![gantt chart for 10_12_2021](/img/g_10_12_21.png)
 
+### 17-12-2021
+
+We have rescheduled the latter half of architecture (the concrete part) to 
+during implementation as it cannot be done at the moment.
+
+![gantt chart for 17_12_2021](/img/g_17_12_21.png)
