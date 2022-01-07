@@ -28,3 +28,9 @@ We have rescheduled the latter half of architecture (the concrete part) to
 during implementation as it cannot be done at the moment.
 
 ![gantt chart for 17_12_2021](/img/g_17_12_21.png)
+
+### 7-01-2022
+
+After a christmas break, this is the state of the project as we begin implementation
+
+(insert picture here)
