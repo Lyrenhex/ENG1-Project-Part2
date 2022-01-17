@@ -33,4 +33,4 @@ during implementation as it cannot be done at the moment.
 
 After a christmas break, this is the state of the project as we begin implementation
 
-(insert picture here)
+![gantt chart for 7_01_2021](/img/g_7_1_22.png)
