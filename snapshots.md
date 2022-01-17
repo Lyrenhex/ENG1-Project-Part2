@@ -33,4 +33,10 @@ during implementation as it cannot be done at the moment.
 
 After a christmas break, this is the state of the project as we begin implementation
 
-![gantt chart for 7_01_2021](/img/g_7_1_22.png)
+![gantt chart for 7_01_2022](/img/g_7_1_22.png)
+
+### 14-01-2022
+
+After exams week, this is the status of the project, with more work planned to be done in the following week
+
+![gantt chart for 14_01_2022](/img/g_14_1_22.png)
