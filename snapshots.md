@@ -40,3 +40,7 @@ After a christmas break, this is the state of the project as we begin implementa
 After exams week, this is the status of the project, with more work planned to be done in the following week
 
 ![gantt chart for 14_01_2022](/img/g_14_1_22.png)
+
+### 21-01-2022
+
+![gantt chart for 21_01_2022](/img/g_21_1_22.png)
