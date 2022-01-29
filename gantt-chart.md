@@ -327,3 +327,52 @@ Project starts 2021-11-19
 [Implementation-Section] starts 2022-1-10
 @endgantt
 ```
+
+
+# 28-1-22
+```
+@startgantt
+[Interview Planning] lasts 6 days
+[Interview Planning] is 100% complete
+[Interview Planning] is colored in lightgreen
+
+[Interview] lasts 1 day
+[Interview] is 100% complete
+[Interview] is colored in lightgreen
+
+[Requirements] lasts 14 days
+[Requirements] is 100% complete
+[Requirements] is colored in lightgreen
+
+[Architecture (abstract)] lasts 14 days
+[Architecture (abstract)] is 100% complete
+[Architecture (abstract)] is colored in lightgreen
+
+[Method Selection & Planning] lasts 14 days
+[Method Selection & Planning] is 100% complete
+[Method Selection & Planning] is colored in lightgreen
+
+[Risk Assesment & Management] lasts 7 days
+[Risk Assesment & Management] is colored in lightgreen
+[Risk Assesment & Management] is 100% complete
+
+[Architecture (concrete)] lasts 17 days
+[Architecture (concrete)] is 50% complete
+[Architecture (concrete)] is colored in orange
+
+[Implementation-Section] lasts 23 days
+[Implementation-Section] is colored in lightgreen
+[Implementation-Section] is 100% complete
+
+
+Project starts 2021-11-19
+[Interview Planning] starts 2021-11-26
+[Interview] starts at [Interview Planning]'s end
+[Requirements] starts at [Interview]'s end
+[Architecture (abstract)] starts at [Interview]'s end
+[Method Selection & Planning] starts 2021-12-10
+[Risk Assesment & Management] starts at [Architecture (abstract)]'s end
+[Architecture (concrete)] starts 2022-1-13
+[Implementation-Section] starts 2022-1-10
+@endgantt
+```
