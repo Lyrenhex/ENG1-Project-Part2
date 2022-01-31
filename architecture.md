@@ -7,5 +7,5 @@ layout: default
 ## Diagram #1
 This is our final layout of classes and inheritance
 
-![plantuml class diagram](/img/abstract-architecture.png)
+![plantuml class diagram](/img/abstract_architecture.png)
 
