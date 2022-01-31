@@ -6,5 +6,5 @@ layout: default
 
 ## Diagram #1
 
-![plantuml class diagram](/img/class_diagram.png)
+![plantuml class diagram](/img/abstract-architecture.png)
 
