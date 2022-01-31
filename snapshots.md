@@ -44,3 +44,11 @@ After exams week, this is the status of the project, with more work planned to b
 ### 21-01-2022
 
 ![gantt chart for 21_01_2022](/img/g_21_1_22.png)
+
+
+### 28-01-2022
+
+we are now just finishing up the last bit of documentation
+
+![gantt chart for 28_01_2022](/img/g_28_1_22.png))
+
