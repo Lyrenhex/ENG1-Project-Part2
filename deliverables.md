@@ -13,5 +13,8 @@ layout: default
 ## Source Code
 
 [Source Code](https://github.com/AnnabethS/ENG1-Project)
+The branch for the source code is `main`
 
-The executable jar file available in the project root
+The `gh-pages` branch is for the website content only.
+
+The executable jar file available in the project root (marrrio.jar)
