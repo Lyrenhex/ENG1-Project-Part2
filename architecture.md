@@ -7,7 +7,7 @@ layout: default
 ## Diagram #1
 This is our final layout of classes and inheritance
 
-![plantuml class diagram](/img/abstract_architecture.png)
+![plantuml class diagram](/img/abstract_architecture_names_only.png)
 
 ## Concrete Architecture Diagrams
 
