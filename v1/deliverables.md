@@ -2,15 +2,15 @@
 layout: v1
 ---
 
-[Executable JAR file](jars/marrrio.jar)
+[Executable JAR file](../jars/marrrio.jar)
 
 ## Deliverables as PDFs
 
-- [Requirements](/pdfs/Req1.pdf)
-- [Architecture](/pdfs/Arch1.pdf)
-- [Method Selection and Planning](/pdfs/Plan1.pdf)
-- [Risk Assessment and Mitigation](/pdfs/Risk1.pdf)
-- [Implementation](/pdfs/Impl1.pdf)
+- [Requirements](../pdfs/Req1.pdf)
+- [Architecture](../pdfs/Arch1.pdf)
+- [Method Selection and Planning](../pdfs/Plan1.pdf)
+- [Risk Assessment and Mitigation](../pdfs/Risk1.pdf)
+- [Implementation](../pdfs/Impl1.pdf)
 
 ### Source Code
 

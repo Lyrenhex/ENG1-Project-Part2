@@ -2,14 +2,14 @@
 layout: v2
 ---
 
-[Executable JAR file]()
+[Executable JAR file](../jars/)
 
 ## Deliverables as PDFs
 
-- [Change report](/pdfs/Change2.pdf)
-- [Implementation](/pdfs/Impl2.pdf)
-- [Testing](/pdfs/Test2.pdf)
-- [Continuous Integration](/pdfs/CI2.pdf)
+- [Change report](../pdfs/Change2.pdf)
+- [Implementation](../pdfs/Impl2.pdf)
+- [Testing](../pdfs/Test2.pdf)
+- [Continuous Integration](../pdfs/CI2.pdf)
 
 ### Source Code
 
