@@ -1,10 +1,6 @@
 ---
-layout: default
+layout: v1
 ---
-
-# Version 2 (Assessment 2)
-
-# Version 1 (Assessment 1)
 
 [Executable JAR file](jars/marrrio.jar)
 
