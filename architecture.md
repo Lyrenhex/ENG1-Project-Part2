@@ -4,12 +4,16 @@ layout: default
 
 # Architecture Diagrams
 
-## Diagram #1
+## Version 2 (Assessment 2)
+
+## Version 1 (Assessment 1)
+
+### Diagram #1
 This is our final layout of classes and inheritance
 
 ![plantuml class diagram](/img/abstract_architecture_names_only.png)
 
-## Concrete Architecture Diagrams
+### Concrete Architecture Diagrams
 
 These have been split up, due to the image being too large otherwise
 
