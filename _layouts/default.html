@@ -3,37 +3,77 @@
 
 <!DOCTYPE html>
 <html lang=en>
-<head>
- <meta charset="UTF-8">
- <meta name="viewport"
-       content="width=device-width, initial-scale=1.0">
-  <title>ENG1 Project</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENG1 Project</title>
+  </head>
 
-<navbar>
- <h1>ENG1 Project</h1>
- <nav>
-  <ul>
-   <li><a href="/ENG1-Project/">Home</a></li>
-   <li><a href="/ENG1-Project/snapshots">Snapshots</a>
-   <li><a href="/ENG1-Project/architecture">Architecture</a></li>
-   <li><a href="/ENG1-Project/deliverables">Deliverables</a></li>
-  </ul>
- </nav>
-</navbar>
-  
-{{content}}
- 
-<style>
- nav ul {
-  display : flex;
-  list-style : none;
- }
- nav ul li {
-  margin-right: 10px;
- }
- </style>
-  
-</body>
+  <body>
+
+    <navbar>
+      <h1>ENG1 Project</h1>
+      <nav>
+        <ul>
+          <li><a href="/ENG1-Project-Part2/">Home</a></li>
+          <li><a href="snapshots">Snapshots</a>
+          <li><a href="architecture">Architecture</a></li>
+          <li><a href="deliverables">Deliverables</a></li>
+        </ul>
+      </nav>
+    </navbar>
+
+    {{content}}
+
+    <style>
+      body {
+        text-align: center;
+        font-family: sans-serif;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        background-color: white;
+        color: black;
+        padding: 5px;
+        border: 1px solid #09f;
+        border-radius: 10px;
+        margin-right: 10px;
+        transition: 0.1s all ease-in;
+      }
+
+      nav ul li:hover {
+        background-color: #09f;
+        color: white;
+        transition: 0.1s all ease-in;
+      }
+
+      img {
+        border-radius: 10px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .version {
+        display: inline-block;
+        border: 2px solid black;
+        border-radius: 15px;
+        padding: 15px;
+        margin: auto;
+      }
+
+      .version h4 {
+        margin-top: 0;
+      }
+    </style>
+
+  </body>
+
 </html>
