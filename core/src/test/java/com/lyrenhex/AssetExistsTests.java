@@ -1,13 +1,13 @@
 package com.lyrenhex;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class AssetExistsTests {
     @Test
-    public void oneEqualsOne() {
-        System.out.println("test");
+    public void exampleTest() {
         assertEquals(1, 1);
     }
 }

@@ -1,7 +1,14 @@
 package com.lyrenhex.GameScreens;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
-class MenuTest {
+import static org.junit.Assert.assertEquals;
+
+public class MenuTest {
+
+    @Test
+    public void exampleTest() {
+        assertEquals(1, 1);
+    }
 
 }
