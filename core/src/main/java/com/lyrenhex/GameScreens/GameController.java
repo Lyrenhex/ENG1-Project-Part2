@@ -62,7 +62,7 @@ public class GameController implements Screen {
         colleges = new ArrayList<College>();
         projectileHolder = new ProjectileDataHolder();
         hud = new HUD(this);
-        mapSize = new Vector2(1500, 1500);
+        mapSize = new Vector2(3000, 3000);
     }
 
     @Override
