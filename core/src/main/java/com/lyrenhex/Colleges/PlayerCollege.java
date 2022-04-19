@@ -14,7 +14,6 @@ public class PlayerCollege extends College{
     int healAmount;
 
     public PlayerCollege(Vector2 position, Texture aliveTexture, Texture islandTexture) {
-        //TODO set a collision polygon
         healAmount = 15;
         range = 400;
         aliveSprite = new Sprite(aliveTexture);

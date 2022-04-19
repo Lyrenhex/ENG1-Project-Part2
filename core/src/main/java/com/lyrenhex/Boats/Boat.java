@@ -41,7 +41,7 @@ public abstract class Boat extends PhysicsObject {
 	
 	public abstract void Update(float delta);
 	
-	/*
+	/**
 		Returns Nothing
 
 		Generic move method for boats to move forward by their set speed, and a multiplier
@@ -65,7 +65,7 @@ public abstract class Boat extends PhysicsObject {
 		}
 	}
 	
-	/*
+	/**
 		Returns Nothing
 
 		Turns the boat by its turn speed, in the direction specified by multiplier

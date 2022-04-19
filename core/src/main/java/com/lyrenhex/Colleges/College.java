@@ -16,7 +16,7 @@ public abstract class College extends PhysicsObject {
     Sprite deadSprite;
     Sprite islandSprite;
 
-    /*
+    /**
         Returns true if the specified boat object is in range of the college
 
         @param  other   the boat to check the range of

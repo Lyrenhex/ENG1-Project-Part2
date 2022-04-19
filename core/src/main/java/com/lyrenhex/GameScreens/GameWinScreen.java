@@ -34,7 +34,7 @@ public class GameWinScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Keys.ENTER))
+        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
         {
             game.gotoScreen(Screens.menuScreen);
         }
