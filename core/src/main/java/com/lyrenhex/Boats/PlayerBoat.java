@@ -105,7 +105,7 @@ public class PlayerBoat extends Boat{
 	@Override
 	void Shoot(){
         Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
-        								 rotation, controller.projectileHolder.stock, true,
+        								 rotation, controller.projectileHolder.stock, true, this,
 										 projectileDamageMultiplier, projectileSpeedMultiplier);
         controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
 	}

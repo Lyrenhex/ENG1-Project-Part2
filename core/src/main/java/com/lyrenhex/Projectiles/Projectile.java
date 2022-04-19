@@ -9,7 +9,8 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import java.lang.Math;
 
 public class Projectile extends PhysicsObject {
-    
+
+    public PhysicsObject owner;
     private Vector2 velocity;
     private float speed; 
     private Sprite sprite;
@@ -22,11 +23,13 @@ public class Projectile extends PhysicsObject {
         @param  data        r        the data to use
         @param  isPlayerProjectile  true if the projectile is shot by the player
     */
-    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile) {
+    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, PhysicsObject owner) {
         position = origin;
         speed = data.speed;
         this.isPlayerProjectile = isPlayerProjectile;
         damage = data.damage;
+
+        this.owner = owner;
         
         // Calculate the projectile's velocity in the game space
         velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed, 
@@ -44,11 +47,13 @@ public class Projectile extends PhysicsObject {
         collisionPolygon.setOrigin(data.size.x/2, data.size.y/2);
     }
 
-    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, float damageMultiplier, float speedMultiplier) {
+    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, PhysicsObject owner, float damageMultiplier, float speedMultiplier) {
         position = origin;
         speed = data.speed * speedMultiplier;
         damage = data.damage * damageMultiplier;
         this.isPlayerProjectile = isPlayerProjectile;
+
+        this.owner = owner;
         
         // Calculate the projectile's velocity in the game space
         velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed, 

@@ -6,17 +6,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.lyrenhex.Colleges.College;
+import com.lyrenhex.Colleges.EnemyCollege;
 import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
 
+import java.util.Iterator;
+
 public class CollegeBoat extends AIBoat {
 
-    private College college;
-    private PlayerBoat playerBoat;
+    public EnemyCollege college;
 
-    public CollegeBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize, College college, PlayerBoat playerBoat){
+    public CollegeBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize, EnemyCollege college){
         xpValue = 25;
         plunderValue = 25;
         
@@ -51,16 +53,33 @@ public class CollegeBoat extends AIBoat {
 		mapBounds.add(new Vector2(0, mapSize.y));
 
         this.college = college;
-        this.playerBoat = playerBoat;
     }
 
     public void Update(float delta){
         MoveToDestination(delta);
         timeSinceLastShot += delta;
-        // if the player boat is within 500 units of the college boat
-        if (500 >= Math.sqrt(Math.pow((sprite.getX() + sprite.getWidth() / 2) - (playerBoat.position.x + playerBoat.GetCenterX()), 2) +
-                Math.pow((sprite.getY() + sprite.getHeight() / 2) - (playerBoat.position.y + playerBoat.GetCenterY()), 2)) && !(college instanceof PlayerCollege)) {
-            SetDestination(playerBoat.position); // start following the player boat
+        Boat target = null;
+        for (PhysicsObject current : controller.physicsObjects) {
+            if (current instanceof PlayerBoat && college.HP > 0) {
+                PlayerBoat playerBoat = (PlayerBoat) current;
+                // if the player boat is within 500 units of the college boat
+                if (500 >= Math.sqrt(Math.pow((sprite.getX() + sprite.getWidth() / 2) - (playerBoat.position.x + playerBoat.GetCenterX()), 2) +
+                        Math.pow((sprite.getY() + sprite.getHeight() / 2) - (playerBoat.position.y + playerBoat.GetCenterY()), 2))) {
+                    target = playerBoat;
+                    break;
+                }
+            } else if (current instanceof CollegeBoat && ((CollegeBoat) current).college != college && college.HP <= 0) {
+                CollegeBoat boat = (CollegeBoat) current;
+                // if the boat is within 500 units of the college boat
+                if (500 >= Math.sqrt(Math.pow((sprite.getX() + sprite.getWidth() / 2) - (boat.position.x + boat.GetCenterX()), 2) +
+                        Math.pow((sprite.getY() + sprite.getHeight() / 2) - (boat.position.y + boat.GetCenterY()), 2))) {
+                    target = boat;
+                    break;
+                }
+            }
+        }
+        if (target != null) {
+            SetDestination(target.position); // start following the player boat
             if (timeSinceLastShot > shotDelay) {
                 timeSinceLastShot = 0.0f;
                 Shoot();
@@ -74,7 +93,7 @@ public class CollegeBoat extends AIBoat {
 
     public void Shoot(){
         Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
-                rotation, controller.projectileHolder.stock, false);
+                rotation, controller.projectileHolder.stock, false, this);
         controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
 
     }
@@ -91,6 +110,11 @@ public class CollegeBoat extends AIBoat {
                 object.killOnNextTick = true;
                 controller.xp += xpValue;
                 Destroy();
+            } else if (p.owner != this) {
+                HP -= p.damage;
+                object.killOnNextTick = true;
+                if (HP <= 0)
+                    Destroy();
             }
         }
     }

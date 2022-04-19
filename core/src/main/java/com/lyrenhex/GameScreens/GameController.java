@@ -28,7 +28,7 @@ public class GameController implements Screen {
 
     eng1game game;
     ArrayList<GameObject> gameObjects;
-    ArrayList<PhysicsObject> physicsObjects;
+    public ArrayList<PhysicsObject> physicsObjects;
     public ArrayList<College> colleges;
     public GameMap map;
     private final Vector2 mapSize;
@@ -116,7 +116,7 @@ public class GameController implements Screen {
             CollegeBoat b;
             for (int j = 0; j < 4; j++) {
                 do {
-                    b = new CollegeBoat(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize, e, playerBoat);
+                    b = new CollegeBoat(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize, e);
                     isCollision = false;
                     for (PhysicsObject current : physicsObjects) {
                         if (b.CheckCollisionWith(current)) {

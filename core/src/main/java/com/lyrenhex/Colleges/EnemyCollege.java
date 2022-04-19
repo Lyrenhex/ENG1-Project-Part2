@@ -124,7 +124,7 @@ public class EnemyCollege extends College{
         // then - the shooting inaccuracy to centre the distribution on 0
         gc.NewPhysicsObject(new Projectile(new Vector2(position.x + aliveSprite.getWidth()/2,
                                                        position.y + aliveSprite.getHeight()/2),
-                            shotAngle, projectileType, false));
+                            shotAngle, projectileType, false, this));
         //instantiate a new bullet and pass a reference to the gamecontroller so it can be updated and drawn
     }
 
