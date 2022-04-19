@@ -43,15 +43,16 @@ public class eng1game extends Game {
 				setScreen(menuScreen);
 				break;
 			case gameScreen: //switch back to the game screen
-				gameScreen = new GameController(this);
 				setScreen(gameScreen);
 				break;
 			case gameOverScreen:
-				GameOverScreen gameOverScreen = new GameOverScreen(this, timeUp ? "Time Up! ENTER to go to menu, R to restart" : "You Died! ENTER to go to menu, R to restart");
+				GameOverScreen gameOverScreen = new GameOverScreen(this, timeUp ? "Time Up! ESCAPE to go to menu, R to restart" : "You Died! ESCAPE to go to menu, R to restart");
+				gameScreen = new GameController(this);
 				setScreen(gameOverScreen);
 				break;
 			case gameWinScreen:
 				GameWinScreen gameWinScreen = new GameWinScreen(this);
+				gameScreen = new GameController(this);
 				setScreen(gameWinScreen);
 		}
 	}

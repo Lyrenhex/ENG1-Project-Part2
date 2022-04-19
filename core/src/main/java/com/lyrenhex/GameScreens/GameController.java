@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -30,7 +31,7 @@ public class GameController implements Screen {
     ArrayList<PhysicsObject> physicsObjects;
     public ArrayList<College> colleges;
     public GameMap map;
-    private Vector2 mapSize;
+    private final Vector2 mapSize;
     public PlayerBoat playerBoat;
     private EnemyCollege bossCollege;
     
@@ -95,25 +96,36 @@ public class GameController implements Screen {
         physicsObjects.add(p); //add college to physics object, for updates
         colleges.add(p); //also add a reference to the colleges list
 
-        EnemyCollege e = new EnemyCollege(new Vector2(50,1350), collegeTextures[1], islandTexture,
-                           this, projectileHolder.stock, 200);
-        physicsObjects.add(e);
-        colleges.add(e);
-        
-        e = (new EnemyCollege(new Vector2(1350,50), collegeTextures[2], islandTexture,
-                           this, projectileHolder.stock, 200));
+        boolean isCollision;
+        EnemyCollege e;
+        for (int i = 0; i < 3; i++) {
+            do {
+                e = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[i+1], islandTexture, this, projectileHolder.stock, 200);
+                isCollision = false;
+                for (PhysicsObject current : physicsObjects) {
+                    if (e.CheckCollisionWith(current)) {
+                        isCollision = true;
+                        break;
+                    }
+                }
+            } while (isCollision);
 
-        physicsObjects.add(e);
-        colleges.add(e);
+            physicsObjects.add(e);
+            colleges.add(e);
 
-        e = (new EnemyCollege(new Vector2(1350,1350), collegeTextures[3], islandTexture,
-                           this, projectileHolder.stock, 200));
+        }
 
-        physicsObjects.add(e);
-        colleges.add(e);
-
-        bossCollege = new EnemyCollege(new Vector2(700,700), collegeTextures[4], islandTexture,
-                           this, projectileHolder.boss, 200);
+        do {
+            bossCollege = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[4], islandTexture,
+                    this, projectileHolder.boss, 200);
+            isCollision = false;
+            for (PhysicsObject current : physicsObjects) {
+                if (bossCollege.CheckCollisionWith(current)) {
+                    isCollision = true;
+                    break;
+                }
+            }
+        } while (isCollision);
 
         bossCollege.invulnerable = true;
         physicsObjects.add(bossCollege);
@@ -140,7 +152,6 @@ public class GameController implements Screen {
         xpTick -= delta * xpTickMultiplier;
         if(xpTick <= 0){
             xp += 1;
-            plunder += 1;
             xpTick = 1;
         }
     	
@@ -183,11 +194,15 @@ public class GameController implements Screen {
             ShapeRenderer sr = new ShapeRenderer();
             sr.setProjectionMatrix(map.camera.combined);
             sr.begin(ShapeType.Line);
-            for(int i=0; i < physicsObjects.size(); i++)
-            {
-                sr.polygon(physicsObjects.get(i).collisionPolygon.getTransformedVertices());
+            for (PhysicsObject physicsObject : physicsObjects) {
+                sr.polygon(physicsObject.collisionPolygon.getTransformedVertices());
             }
             sr.end();
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            System.out.println("escape pressed");
+            this.game.gotoScreen(Screens.menuScreen);
         }
     }
 
@@ -224,10 +239,8 @@ public class GameController implements Screen {
             }
         }
         boolean playerIsInDanger = false;
-        for(int i=0; i < colleges.size(); i++)
-        {
-            if(colleges.get(i).isInRange(playerBoat) && colleges.get(i) instanceof EnemyCollege)
-            {
+        for (College college : colleges) {
+            if (college.isInRange(playerBoat) && college instanceof EnemyCollege) {
                 playerIsInDanger = true;
             }
         }
@@ -249,13 +262,10 @@ public class GameController implements Screen {
     {
         boolean foundCollege = false;
         AddXP(100);
-        for(int i=0; i < physicsObjects.size(); i++)
-        {
-            PhysicsObject current = physicsObjects.get(i);
-            if(current.getClass() == EnemyCollege.class)
-            {
+        for (PhysicsObject current : physicsObjects) {
+            if (current.getClass() == EnemyCollege.class) {
                 EnemyCollege e = (EnemyCollege) current;
-                if(e.HP > 0 && !e.invulnerable) // there is still a normal college alive
+                if (e.HP > 0 && !e.invulnerable) // there is still a normal college alive
                 {
                     foundCollege = true;
                     break;
@@ -273,15 +283,7 @@ public class GameController implements Screen {
         that have had the flag set (killOnNextTick) in a safe manner
     */
     public void ClearKilledObjects(){
-        Iterator<PhysicsObject> p = physicsObjects.iterator();
-        while(p.hasNext())
-        {
-            PhysicsObject current = p.next();
-            if(current.killOnNextTick)
-            {
-                p.remove();
-            }
-        }
+        physicsObjects.removeIf(current -> current.killOnNextTick);
     }
 
     @Override
@@ -300,8 +302,7 @@ public class GameController implements Screen {
     public void dispose() {}
 
     public void gameOver(){
-    	if(timer <=0) game.timeUp = true;
-    	else game.timeUp = false;
+        game.timeUp = timer <= 0;
         game.gotoScreen(Screens.gameOverScreen);
     }
 

@@ -16,7 +16,7 @@ public abstract class AIBoat extends Boat {
     float destinationThreshold = 50f; // How close should the boat be to its destination before setting a new one?
     float angleThreshold = 0.25f; // If the boat's rotation is greater than the target angle by this much, start rotating
 
-    /*
+    /**
     Returns Nothing
     Moves the boat towards its current destination
 
@@ -39,7 +39,7 @@ public abstract class AIBoat extends Boat {
 
         if(Vector2.dst(position.x, position.y, destination.x, destination.y) <= destinationThreshold){ // Boat is near destination, set a new one
             boolean newDestinationSet = false;
-            while(newDestinationSet == false){ // Keep going until we find a valid destination
+            while (!newDestinationSet){ // Keep going until we find a valid destination
                 Random r = new Random();
                 newDestinationSet = SetDestination(new Vector2(r.nextInt((int)mapSize.x + 1), r.nextInt((int)mapSize.y + 1)));
             }
@@ -47,7 +47,7 @@ public abstract class AIBoat extends Boat {
     }
 
 
-    /*
+    /**
     Returns true if destination is valid
 
     Attempts to set the boat's destination to the target passed, fails if that would

@@ -39,7 +39,7 @@ public class GameOverScreen implements Screen {
 		{
 			game.gotoScreen(Screens.gameScreen);
 		}
-        else if (Gdx.input.isKeyJustPressed(Keys.ENTER))
+        else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
         {
             game.gotoScreen(Screens.menuScreen);
         }
