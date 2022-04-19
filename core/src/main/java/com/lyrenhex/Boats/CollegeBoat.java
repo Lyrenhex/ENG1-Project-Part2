@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.lyrenhex.Colleges.College;
+import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
@@ -13,8 +14,9 @@ import com.lyrenhex.Projectiles.Projectile;
 public class CollegeBoat extends AIBoat {
 
     private College college;
+    private PlayerBoat playerBoat;
 
-    public CollegeBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize, College college){
+    public CollegeBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize, College college, PlayerBoat playerBoat){
         xpValue = 25;
         plunderValue = 25;
         
@@ -49,12 +51,21 @@ public class CollegeBoat extends AIBoat {
 		mapBounds.add(new Vector2(0, mapSize.y));
 
         this.college = college;
+        this.playerBoat = playerBoat;
     }
 
     public void Update(float delta){
         MoveToDestination(delta);
         timeSinceLastShot += delta;
-        // TODO: if timeSinceLastShot > shotDelay && we're in range of the collegeboat && the college is not friendly: Shoot();
+        // if the player boat is within 500 units of the college boat
+        if (500 >= Math.sqrt(Math.pow((sprite.getX() + sprite.getWidth() / 2) - (playerBoat.position.x + playerBoat.GetCenterX()), 2) +
+                Math.pow((sprite.getY() + sprite.getHeight() / 2) - (playerBoat.position.y + playerBoat.GetCenterY()), 2)) && !(college instanceof PlayerCollege)) {
+            SetDestination(playerBoat.position); // start following the player boat
+            if (timeSinceLastShot > shotDelay) {
+                timeSinceLastShot = 0.0f;
+                Shoot();
+            }
+        }
     }
 
     public void Destroy(){
@@ -62,7 +73,10 @@ public class CollegeBoat extends AIBoat {
     }
 
     public void Shoot(){
-        // TODO
+        Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                rotation, controller.projectileHolder.stock, false);
+        controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
+
     }
 
     public void OnCollision(PhysicsObject object){
@@ -71,12 +85,13 @@ public class CollegeBoat extends AIBoat {
             controller.xp += xpValue;
             controller.plunder += plunderValue;
             Destroy();
-        } else if (object instanceof Projectile){
-            object.killOnNextTick = true;
+        } else if (object instanceof Projectile) {
             Projectile p = (Projectile) object;
-            if(p.isPlayerProjectile)
+            if(p.isPlayerProjectile) {
+                object.killOnNextTick = true;
                 controller.xp += xpValue;
-            Destroy();
+                Destroy();
+            }
         }
     }
 }

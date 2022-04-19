@@ -113,6 +113,20 @@ public class GameController implements Screen {
             physicsObjects.add(e);
             colleges.add(e);
 
+            CollegeBoat b;
+            for (int j = 0; j < 4; j++) {
+                do {
+                    b = new CollegeBoat(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize, e, playerBoat);
+                    isCollision = false;
+                    for (PhysicsObject current : physicsObjects) {
+                        if (b.CheckCollisionWith(current)) {
+                            isCollision = true;
+                            break;
+                        }
+                    }
+                } while (isCollision);
+                physicsObjects.add(b);
+            }
         }
 
         do {
@@ -130,14 +144,8 @@ public class GameController implements Screen {
         bossCollege.invulnerable = true;
         physicsObjects.add(bossCollege);
         colleges.add(bossCollege);
+
         //create the moving camera/map borders
-
-        //create some neutral boats (could be extended to a proper spawner at some point)
-        physicsObjects.add(new NeutralBoat(this, new Vector2(400, 400), mapSize));
-        physicsObjects.add(new NeutralBoat(this, new Vector2(800, 400), mapSize));
-        physicsObjects.add(new NeutralBoat(this, new Vector2(400, 800), mapSize));
-        physicsObjects.add(new NeutralBoat(this, new Vector2(800, 800), mapSize));
-
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
         (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
