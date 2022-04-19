@@ -18,6 +18,8 @@ public class eng1game extends Game {
 	GameController gameScreen;
 	
 	public boolean timeUp = false;
+
+	public boolean gameStarted = false;
 	
 	@Override
 	public void create () {
@@ -43,18 +45,25 @@ public class eng1game extends Game {
 				setScreen(menuScreen);
 				break;
 			case gameScreen: //switch back to the game screen
+				gameStarted = true;
 				setScreen(gameScreen);
 				break;
 			case gameOverScreen:
 				GameOverScreen gameOverScreen = new GameOverScreen(this, timeUp ? "Time Up! ESCAPE to go to menu, R to restart" : "You Died! ESCAPE to go to menu, R to restart");
 				gameScreen = new GameController(this);
+				gameStarted = false;
 				setScreen(gameOverScreen);
 				break;
 			case gameWinScreen:
 				GameWinScreen gameWinScreen = new GameWinScreen(this);
 				gameScreen = new GameController(this);
+				gameStarted = false;
 				setScreen(gameWinScreen);
 		}
+	}
+
+	public void setDifficulty(Difficulty difficulty) {
+		gameScreen.setDifficulty(difficulty);
 	}
 
 	@Override

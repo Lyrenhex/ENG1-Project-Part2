@@ -19,6 +19,7 @@ import com.lyrenhex.Colleges.EnemyCollege;
 import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.GameObject;
 import com.lyrenhex.GameGenerics.PhysicsObject;
+import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 import com.lyrenhex.Level.GameMap;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
@@ -64,17 +65,14 @@ public class GameController implements Screen {
         projectileHolder = new ProjectileDataHolder();
         hud = new HUD(this);
         mapSize = new Vector2(3000, 3000);
-    }
 
-    @Override
-    public void show() { //this function is called when the screen is shown
         batch = new SpriteBatch();
 
         // Create the player boat and place it in the centre of the screen
         playerBoat = new PlayerBoat(this, new Vector2(200,200), mapSize.cpy());
         physicsObjects.add(playerBoat);
 
-        // this section creates a array of textures for the colleges, shuffles it and assigns to 
+        // this section creates a array of textures for the colleges, shuffles it and assigns to
         // the created colleges
         Texture[] collegeTextures = new Texture[10];
         Random rd = new Random();
@@ -147,7 +145,16 @@ public class GameController implements Screen {
 
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
-        (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+                (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        playerBoat.setDifficulty(difficulty);
+    }
+
+    @Override
+    public void show() { //this function is called when the screen is shown
+
     }
 
     @Override

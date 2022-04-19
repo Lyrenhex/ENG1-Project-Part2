@@ -11,6 +11,7 @@ import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameGenerics.Upgrades;
 import com.lyrenhex.GameScreens.GameController;
+import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.Projectiles.Projectile;
 
 public class PlayerBoat extends Boat{
@@ -158,4 +159,20 @@ public class PlayerBoat extends Boat{
 			}
 		}
 	}
+
+	public void setDifficulty(Difficulty difficulty) {
+		switch (difficulty) {
+			case Easy:
+				maxHP *= 2;
+				HP *= 2;
+				projectileDamageMultiplier *= 2;
+				break;
+			case Normal:
+				break;
+			case Hard:
+				defense = 0;
+				projectileDamageMultiplier /= 2;
+		}
+	}
 }
+

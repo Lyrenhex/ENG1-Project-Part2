@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 
 public class Menu implements Screen {
@@ -27,7 +28,10 @@ public class Menu implements Screen {
 		batch = new SpriteBatch();
 		font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
 		menuTextLayout = new GlyphLayout(); //layouts can be used to manage text to allow it to be centred
-		menuTextLayout.setText(font, "press ENTER to goto game screen\npress ESCAPE to quit");
+		menuTextLayout.setText(font, "press ENTER to resume game\npress ESCAPE to quit");
+		if (!game.gameStarted) {
+			menuTextLayout.setText(font, "press ENTER to start on normal difficulty\npress E to start on easy difficulty\npress H to start on hard difficulty\npress ESCAPE to quit");
+		}
 	}
 
 	@Override
@@ -42,6 +46,15 @@ public class Menu implements Screen {
 		else if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
 		{
 			Gdx.app.exit();
+		}
+		else if (!game.gameStarted) {
+			if (Gdx.input.isKeyJustPressed(Keys.E)) {
+				game.setDifficulty(Difficulty.Easy);
+				game.gotoScreen(Screens.gameScreen);
+			} else if (Gdx.input.isKeyJustPressed(Keys.H)) {
+				game.setDifficulty(Difficulty.Hard);
+				game.gotoScreen(Screens.gameScreen);
+			}
 		}
 
 		//do draws
