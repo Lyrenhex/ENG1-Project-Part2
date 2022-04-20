@@ -13,6 +13,7 @@ import com.lyrenhex.GameGenerics.Upgrades;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.Projectiles.Projectile;
+import com.lyrenhex.Projectiles.ProjectileData;
 
 /**
  * The boat under player control - in practice, this class represents the player.
@@ -26,7 +27,11 @@ public class PlayerBoat extends Boat{
 
 	float timeSinceLastHeal = 0;
 
+	public ProjectileData projectileType;
+
     public PlayerBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize) {
+		this.projectileType = controller.projectileHolder.stock;
+
         this.controller = controller;
 
 		this.HP = 100;
@@ -109,7 +114,7 @@ public class PlayerBoat extends Boat{
 	@Override
 	void Shoot(){
         Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
-        								 rotation, controller.projectileHolder.stock, true, this,
+        								 rotation, projectileType, true, this,
 										 projectileDamageMultiplier, projectileSpeedMultiplier);
         controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
 	}

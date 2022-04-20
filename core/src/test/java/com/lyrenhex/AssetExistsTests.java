@@ -46,6 +46,7 @@ public class AssetExistsTests {
         assetTest("img/water1.png");
         assetTest("img/water2.png");
         assetTest("img/water3.png");
+        assetTest("img/longboi.png");
     }
     
     @Test

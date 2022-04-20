@@ -148,6 +148,20 @@ public class GameController implements Screen {
         physicsObjects.add(bossCollege);
         colleges.add(bossCollege);
 
+        // Spawn Long Boi somewhere...
+        LongBoi l;
+        do {
+            l = new LongBoi(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize);
+            isCollision = false;
+            for (PhysicsObject current : physicsObjects) {
+                if (l.CheckCollisionWith(current)) {
+                    isCollision = true;
+                    break;
+                }
+            }
+        } while (isCollision);
+        physicsObjects.add(l);
+
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
                 (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
