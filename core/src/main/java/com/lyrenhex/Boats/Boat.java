@@ -13,6 +13,9 @@ import com.lyrenhex.GameScreens.GameController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+/**
+ * Abstract class to implement basic features applicable to all Boats (Player and AI).
+ */
 public abstract class Boat extends PhysicsObject {
 	GameController controller;
     
@@ -42,15 +45,13 @@ public abstract class Boat extends PhysicsObject {
 	public abstract void Update(float delta);
 	
 	/**
-		Returns Nothing
-
-		Generic move method for boats to move forward by their set speed, and a multiplier
-
-		@param	delta		time since last frame
-		@param	multiplier	multiplier to set forward or reverse motion (1 or -1)
-	*/
+	 * Generic move method for boats to move forward by their set speed, and a multiplier
+	 *
+	 * @param	delta		time since last frame
+	 * @param	multiplier	multiplier to set forward or reverse motion (1 or -1)
+	 */
 	void Move(float delta, int multiplier) {
-		// Convention: 0 degrees means the object is pointing right, positive angles are counter clockwise
+		// Convention: 0 degrees means the object is pointing right, positive angles are counter-clockwise
 		Vector2 oldPos = position.cpy();
 		position.x += Math.cos(Math.toRadians(rotation)) * speed * delta * multiplier;
 		position.y += Math.sin(Math.toRadians(rotation)) * speed * delta * multiplier;
@@ -66,26 +67,35 @@ public abstract class Boat extends PhysicsObject {
 	}
 	
 	/**
-		Returns Nothing
-
-		Turns the boat by its turn speed, in the direction specified by multiplier
-
-		@param	delta		time since last frame
-		@param	multiplier	turn anti-clockwise if +ve, clockwise if -ve
-	*/
-	// Turn the boat, a positive multiplier will turn it anti-clockwise, negative clockwise
+	 * Turns the boat by its turn speed, in the direction specified by multiplier.
+	 * A positive multiplier will turn the boat anti-clockwise, and negative clockwise.
+	 *
+	 * @param	delta		time since last frame
+	 * @param	multiplier	turn anti-clockwise if +ve, clockwise if -ve
+	 */
 	void Turn(float delta, float multiplier) {
 		rotation = (rotation + turnSpeed * delta * multiplier) % 360;
 		sprite.setRotation(rotation);
 		collisionPolygon.setRotation(rotation - 90);
 	}
-	
+
+	/**
+	 * Fires a cannonball.
+	 */
 	abstract void Shoot();
-	
+
+	/**
+	 * Destroys the boat.
+	 */
 	abstract void Destroy();
-	
-	// Place the boat somewhere in global space, use this when spawning boats
-	void SetPosition(float x, float y) {
+
+	/**
+	 * Set the boat's position in global space.
+	 *
+	 * @param	x	the x-coordinate of the boat
+	 * @param	y	the y-coordinate of the boat
+	 */
+	public void SetPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
 		sprite.setPosition(x, y);
@@ -97,11 +107,21 @@ public abstract class Boat extends PhysicsObject {
 		sprite.draw(batch);
 	}
 
+	/**
+	 * Returns the x-coordinate of the center of the boat.
+	 *
+	 * @return the x-coordinate of the center of the boat.
+	 */
 	public float GetCenterX()
 	{
 		return sprite.getOriginX();
 	}
 
+	/**
+	 * Returns the y-coordinate of the center of the boat.
+	 *
+	 * @return the y-coordinate of the center of the boat.
+	 */
 	public float GetCenterY()
 	{
 		return sprite.getOriginY();

@@ -25,6 +25,9 @@ import com.lyrenhex.Level.GameMap;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.UI.HUD;
 
+/**
+ * The game screen, controlling the core gameplay.
+ */
 public class GameController implements Screen {
 
     eng1game game;
@@ -94,6 +97,8 @@ public class GameController implements Screen {
         physicsObjects.add(p); //add college to physics object, for updates
         colleges.add(p); //also add a reference to the colleges list
 
+        // Account for increased map size (to allow space for obstacles and weather events) by randomly placing the
+        // enemy colleges.
         boolean isCollision;
         EnemyCollege e;
         for (int i = 0; i < 3; i++) {
@@ -148,14 +153,18 @@ public class GameController implements Screen {
                 (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
 
+    /**
+     * Method to set the difficulty, using the method defined on the PlayerBoat (which is the only object affected by
+     * difficulty).
+     *
+     * @param difficulty the difficulty of the game (Easy, Normal, or Hard).
+     */
     public void setDifficulty(Difficulty difficulty) {
         playerBoat.setDifficulty(difficulty);
     }
 
     @Override
-    public void show() { //this function is called when the screen is shown
-
-    }
+    public void show() { }
 
     @Override
     public void render(float delta) {
@@ -216,19 +225,15 @@ public class GameController implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            System.out.println("escape pressed");
             this.game.gotoScreen(Screens.menuScreen);
         }
     }
 
-    /*
-        Returns Nothing
-
-        Updates all physics objects in the PhysicsObjects array
-
-        @param  delta   time since last frame
-        @return nothing
-    */
+    /**
+     * Updates all physics objects in the PhysicsObjects array
+     *
+     * @param  delta   time since last frame
+     */
     public void UpdateObjects(float delta){
         for(int i=0; i < physicsObjects.size(); i++)
         {
@@ -266,13 +271,11 @@ public class GameController implements Screen {
             xpTickMultiplier = 1f;
     }
 
-    /*
-        Called when a college is destroyed
-        Makes sure the boss college will be made vulnerable after the rest of the 
-        colleges are destroyed
-
-        @return nothing
-    */
+    /**
+     * Called when a college is destroyed
+     * Makes sure the boss college will be made vulnerable after the rest of the
+     * colleges are destroyed
+     */
     public void CollegeDestroyed()
     {
         boolean foundCollege = false;
@@ -293,10 +296,10 @@ public class GameController implements Screen {
         }
     }
 
-    /*
-        Goes through all the physicsobjects and removes ones from the list
-        that have had the flag set (killOnNextTick) in a safe manner
-    */
+    /**
+     * Goes through all the PhysicsObjects and removes ones from the list
+     * that have had the flag set (killOnNextTick) in a safe manner
+     */
     public void ClearKilledObjects(){
         physicsObjects.removeIf(current -> current.killOnNextTick);
     }
@@ -316,23 +319,26 @@ public class GameController implements Screen {
     @Override
     public void dispose() {}
 
+    /**
+     * Ends the game with a failure screen.
+     */
     public void gameOver(){
         game.timeUp = timer <= 0;
         game.gotoScreen(Screens.gameOverScreen);
     }
 
-    /*
-        Called to give a reference to a new physicsobject to the physicsobjects list
-        @param  obj     the object to add
+    /**
+     * Called to give a reference to a new `PhysicsObject` to the `physicsObjects` list
+     * @param  obj     the object to add
     */    
     public void NewPhysicsObject(PhysicsObject obj) {
-    	// A new PhysicsObject has been created, add it to the list so it receives updates
+    	// A new PhysicsObject has been created, add it to the list, so it receives updates
     	physicsObjects.add(obj);
     }
 
-    /*
-        add xp to the player's amount
-    */
+    /**
+     * Add xp to the player's amount
+     */
     public void AddXP(int amount){
         // Give the player an equal amount of gold and XP
         xp += amount;

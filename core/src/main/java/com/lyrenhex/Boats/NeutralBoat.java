@@ -10,6 +10,9 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
 
+/**
+ * A neutral boat which does not engage in combat.
+ */
 public class NeutralBoat extends AIBoat {
 
     public NeutralBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize){

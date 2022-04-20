@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.lyrenhex.GameGenerics.GameObject;
 
+/**
+ * The water background which covers the screen.
+ */
 public class WaterBackground extends GameObject {
 
 

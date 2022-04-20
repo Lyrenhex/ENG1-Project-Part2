@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 
+/**
+ * Menu screen for when the game is launched or paused.
+ */
 public class Menu implements Screen {
 	private SpriteBatch batch;
 	BitmapFont font;
@@ -24,7 +27,6 @@ public class Menu implements Screen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		batch = new SpriteBatch();
 		font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
 		menuTextLayout = new GlyphLayout(); //layouts can be used to manage text to allow it to be centred
@@ -69,33 +71,18 @@ public class Menu implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resize(int width, int height) { }
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void pause() { }
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void resume() { }
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void hide() { }
 
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void dispose() { }
 
 }

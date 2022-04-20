@@ -14,6 +14,9 @@ import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.Projectiles.Projectile;
 
+/**
+ * The boat under player control - in practice, this class represents the player.
+ */
 public class PlayerBoat extends Boat{
 	float projectileDamageMultiplier = 1;
 	float projectileSpeedMultiplier = 1;
@@ -116,11 +119,11 @@ public class PlayerBoat extends Boat{
 		controller.gameOver();
 	}
 
-	/*
-		Allows the player to upgrade their boat
-
-		@param	upgrade		The requested upgrade
-		@param	amount		the amount to upgrade by
+	/**
+	 * Allows the player to upgrade their boat
+	 *
+	 * @param	upgrade		The requested upgrade
+	 * @param	amount		the amount to upgrade by
 	*/
     public void Upgrade(Upgrades upgrade, float amount){
     	if(upgrade == Upgrades.health) {
@@ -146,6 +149,12 @@ public class PlayerBoat extends Boat{
 		sprite.draw(batch);
 	}
 
+	/**
+	 * Heals the player by the `amount` specified, multiplied by the time elapsed since the last heal.
+	 *
+	 * @param amount the base amount to heal the player.
+	 * @param delta the time delta since the last frame.
+	 */
 	public void Heal(int amount, float delta)
 	{
 		timeSinceLastHeal += delta;
@@ -160,6 +169,12 @@ public class PlayerBoat extends Boat{
 		}
 	}
 
+	/**
+	 * Called when starting a game, sets the difficulty conditions of the game.
+	 * Defaults to 'Normal' if not called on game start.
+	 *
+	 * @param difficulty the difficulty of the game (Easy, Normal, or Hard).
+	 */
 	public void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 			case Easy:

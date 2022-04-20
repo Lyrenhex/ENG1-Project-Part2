@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.lyrenhex.GeneralControl.eng1game;
 
+/**
+ * The game over screen for when the player loses.
+ */
 public class GameOverScreen implements Screen {
 
     private SpriteBatch batch;
@@ -26,7 +29,6 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
         gameOverTextLayout = new GlyphLayout();
@@ -56,33 +58,18 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void resize(int width, int height) { }
 
     @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void dispose() { }
     
 }

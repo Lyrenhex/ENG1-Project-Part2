@@ -14,6 +14,10 @@ import com.lyrenhex.Projectiles.Projectile;
 
 import java.util.Iterator;
 
+/**
+ * An AI boat which belongs to a specific college. This boat will be an enemy of the player until its college has
+ * been destroyed (at which time it will fight other college boats on behalf of the player).
+ */
 public class CollegeBoat extends AIBoat {
 
     public EnemyCollege college;
@@ -44,9 +48,9 @@ public class CollegeBoat extends AIBoat {
 
 		sprite.setPosition(initialPosition.x, initialPosition.y);
 
-        this.mapSize = mapSize.cpy(); //copy the array so we don't modify the original
-		mapBounds = new Array<Vector2>(true, 4); //use a libgdx array of vectors because
-        // its an easy way to check point x box collision
+        this.mapSize = mapSize.cpy(); // copy the array so we don't modify the original
+        // use a libgdx array of vectors because it's an easy way to check point x box collision
+		mapBounds = new Array<Vector2>(true, 4);
 		mapBounds.add(new Vector2(0,0));
 		mapBounds.add(new Vector2(mapSize.x, 0));
 		mapBounds.add(new Vector2(mapSize.x, mapSize.y));
@@ -79,7 +83,7 @@ public class CollegeBoat extends AIBoat {
             }
         }
         if (target != null) {
-            SetDestination(target.position); // start following the player boat
+            SetDestination(target.position); // start following the target boat
             if (timeSinceLastShot > shotDelay) {
                 timeSinceLastShot = 0.0f;
                 Shoot();

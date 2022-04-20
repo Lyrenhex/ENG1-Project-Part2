@@ -7,6 +7,9 @@ import com.lyrenhex.Colleges.College;
 
 import com.badlogic.gdx.math.Intersector;
 
+/**
+ * Abstract class to implement common functionality between neutral and college boats.
+ */
 public abstract class AIBoat extends Boat {
     Vector2 initialPosition;
     Vector2 destination;
@@ -17,12 +20,10 @@ public abstract class AIBoat extends Boat {
     float angleThreshold = 0.25f; // If the boat's rotation is greater than the target angle by this much, start rotating
 
     /**
-    Returns Nothing
-    Moves the boat towards its current destination
-
-    @param delta time since last frame
-    @return void
-    */
+     * Moves the boat towards its current destination
+     *
+     * @param delta time since last frame
+     */
     public void MoveToDestination(float delta){
         Move(delta, 1);
 
@@ -48,14 +49,12 @@ public abstract class AIBoat extends Boat {
 
 
     /**
-    Returns true if destination is valid
-
-    Attempts to set the boat's destination to the target passed, fails if that would
-    intersect a college to get to it
-
-    @param  target  the destination you want the ship to move to
-    @return bool    true if the destination was valid
-    */
+     * Attempts to set the boat's destination to the target passed, fails if that would
+     * intersect a college to get to it
+     *
+     * @param  target  the destination you want the ship to move to
+     * @return bool    true if the destination was valid
+     */
     boolean SetDestination(Vector2 target){
         // We want to check if there is any college between the boat and its destination
         for (College college : controller.colleges) {
@@ -67,9 +66,5 @@ public abstract class AIBoat extends Boat {
         initialPosition = position.cpy();
         this.destination = target;
         return true;
-    }
-
-    Vector2 GetDestination() {
-        return destination;
     }
 }

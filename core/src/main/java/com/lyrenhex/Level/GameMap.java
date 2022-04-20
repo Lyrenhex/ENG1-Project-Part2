@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.GameGenerics.GameObject;
 
-
+/**
+ * The map for the game, mostly handling camera details.
+ */
 public class GameMap extends GameObject {
 
     public OrthographicCamera camera;

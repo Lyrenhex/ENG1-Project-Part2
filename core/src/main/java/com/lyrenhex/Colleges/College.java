@@ -7,6 +7,9 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 
 import java.lang.Math;
 
+/**
+ * Abstract class to implement common functions between enemy colleges and the player's college.
+ */
 public abstract class College extends PhysicsObject {
     int range;
     int HP;
@@ -17,10 +20,10 @@ public abstract class College extends PhysicsObject {
     Sprite islandSprite;
 
     /**
-        Returns true if the specified boat object is in range of the college
-
-        @param  other   the boat to check the range of
-        @return boolean true if the boat is in range of the college
+     * Returns true if the specified boat object is in range of the college
+     *
+     * @param  other   the boat to check the range of
+     * @return true if the boat is in range of the college
     */
     public boolean isInRange(Boat other)
     {

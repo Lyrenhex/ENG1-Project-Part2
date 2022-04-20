@@ -11,6 +11,9 @@ import com.lyrenhex.GameScreens.Menu;
 import com.lyrenhex.GameScreens.Screens;
 import com.lyrenhex.GameScreens.Splash;
 
+/**
+ * The core class of the game, which handles high level logic and screen transitions.
+ */
 public class eng1game extends Game {
 	SpriteBatch batch;
 	Texture img;
@@ -26,14 +29,14 @@ public class eng1game extends Game {
 		// create a menu and game screen, then switch to a new splash screen
 		menuScreen = new Menu(this);
 		gameScreen = new GameController(this);
-		gotoScreen(Screens.splashScreen); 
-		// splash screen commented out for now, in order to make testing faster,
-		// splash will be re-added when the game is done
-		// for now go directly to the menu
-		// gotoScreen(Screens.menuScreen);
+		gotoScreen(Screens.splashScreen);
 	}
-	
-	// uses the Screens enum to change between any screen
+
+	/**
+	 * Switch to a screen defined in the Screens enum.
+	 *
+	 * @param s the Screen to switch to.
+	 */
 	public void gotoScreen(Screens s)
 	{
 		switch(s){
@@ -62,23 +65,22 @@ public class eng1game extends Game {
 		}
 	}
 
+	/**
+	 * Method to set the difficulty, using the method defined in GameController.
+	 *
+	 * @param difficulty the difficulty of the game (Easy, Normal, or Hard).
+	 */
 	public void setDifficulty(Difficulty difficulty) {
 		gameScreen.setDifficulty(difficulty);
 	}
 
 	@Override
 	public void render () {
-		/*ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();*/
 		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		/*batch.dispose();
-		img.dispose();*/
 		super.dispose();
 	}
 }
