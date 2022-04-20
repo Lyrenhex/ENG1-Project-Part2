@@ -27,9 +27,9 @@ public class CollegeBoat extends AIBoat {
         plunderValue = 25;
         
         this.HP = 100;
-		this.maxHP = 100;
-		this.speed = 75;
-		this.turnSpeed = 150;
+        this.maxHP = 100;
+        this.speed = 75;
+        this.turnSpeed = 150;
 
         this.controller = controller;
 
@@ -42,19 +42,19 @@ public class CollegeBoat extends AIBoat {
         sprite.setOrigin(50, 25);
 
         collisionPolygon.setPosition(position.x + GetCenterX()/2, position.y - GetCenterY()/2 - 10);
-		collisionPolygon.setOrigin(25,50);
+        collisionPolygon.setOrigin(25,50);
         collisionPolygon.setRotation(rotation - 90);
 
 
-		sprite.setPosition(initialPosition.x, initialPosition.y);
+        sprite.setPosition(initialPosition.x, initialPosition.y);
 
         this.mapSize = mapSize.cpy(); // copy the array so we don't modify the original
         // use a libgdx array of vectors because it's an easy way to check point x box collision
-		mapBounds = new Array<Vector2>(true, 4);
-		mapBounds.add(new Vector2(0,0));
-		mapBounds.add(new Vector2(mapSize.x, 0));
-		mapBounds.add(new Vector2(mapSize.x, mapSize.y));
-		mapBounds.add(new Vector2(0, mapSize.y));
+        mapBounds = new Array<Vector2>(true, 4);
+        mapBounds.add(new Vector2(0,0));
+        mapBounds.add(new Vector2(mapSize.x, 0));
+        mapBounds.add(new Vector2(mapSize.x, mapSize.y));
+        mapBounds.add(new Vector2(0, mapSize.y));
 
         this.college = college;
     }

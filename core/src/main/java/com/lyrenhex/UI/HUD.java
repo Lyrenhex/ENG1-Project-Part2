@@ -68,11 +68,11 @@ public class HUD extends GameObject {
         
         stage = new Stage(); // Lets us implement interactable UI elements
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
-		hpTextLayout = new GlyphLayout();
-		timerTextLayout = new GlyphLayout();
+        hpTextLayout = new GlyphLayout();
+        timerTextLayout = new GlyphLayout();
         xpTextLayout = new GlyphLayout();
-		plunderTextLayout = new GlyphLayout();
-		Gdx.input.setInputProcessor(stage);
+        plunderTextLayout = new GlyphLayout();
+        Gdx.input.setInputProcessor(stage);
         
         DrawUpgradeButton(); // put this in its own function to make this function look a bit cleaner
     }
@@ -148,11 +148,11 @@ public class HUD extends GameObject {
      */
     public void ToggleMenu(){
         // Put the XP menu drawing calls in its own function so that render doesn't get too cluttered
-    	
-    	// Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
+        
+        // Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
         if(!upgradeMenuInitialised) InitialiseMenu();
         
-    	// Add/re-add the UI elements back to the stage
+        // Add/re-add the UI elements back to the stage
         if(upgradeMenuOpen){
             UpdateMenu();
             stage.addActor(upgradeMenuBackground);

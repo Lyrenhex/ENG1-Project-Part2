@@ -183,18 +183,18 @@ public class GameController implements Screen {
     @Override
     public void render(float delta) {
         // do updates here
-    	timer -= delta;
-    	if(timer <= 0) gameOver();
-    	
+        timer -= delta;
+        if(timer <= 0) gameOver();
+        
         // give the player XP and Plunder each frame, normalised using delta
         xpTick -= delta * xpTickMultiplier;
         if(xpTick <= 0){
             xp += 1;
             xpTick = 1;
         }
-    	
+        
         hud.Update(delta);
-    	map.Update(delta);
+        map.Update(delta);
 
         UpdateObjects(delta); //update all physicsobjects
         ClearKilledObjects(); //clear any 'killed' objects
@@ -205,8 +205,8 @@ public class GameController implements Screen {
         }
 
         // do draws here
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(map.camera.combined); //set the sprite batch to use the correct camera
 
@@ -346,8 +346,8 @@ public class GameController implements Screen {
      * @param  obj     the object to add
     */    
     public void NewPhysicsObject(PhysicsObject obj) {
-    	// A new PhysicsObject has been created, add it to the list, so it receives updates
-    	physicsObjects.add(obj);
+        // A new PhysicsObject has been created, add it to the list, so it receives updates
+        physicsObjects.add(obj);
     }
 
     /**

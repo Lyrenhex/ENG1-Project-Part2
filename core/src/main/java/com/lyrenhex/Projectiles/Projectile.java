@@ -36,7 +36,7 @@ public class Projectile extends PhysicsObject {
         
         // Calculate the projectile's velocity in the game space
         velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed, 
-        		(float) Math.sin(Math.toRadians(originRot)) * speed);
+                (float) Math.sin(Math.toRadians(originRot)) * speed);
         
         sprite = new Sprite(data.texture);
         sprite.setSize(data.size.x, data.size.y);
@@ -67,7 +67,7 @@ public class Projectile extends PhysicsObject {
 
         // Calculate the projectile's velocity in the game space
         velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed,
-        		(float) Math.sin(Math.toRadians(originRot)) * speed);
+                (float) Math.sin(Math.toRadians(originRot)) * speed);
 
         sprite = new Sprite(data.texture);
         sprite.setSize(data.size.x, data.size.y);
