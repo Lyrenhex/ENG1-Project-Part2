@@ -69,12 +69,16 @@ public class LongBoi extends AIBoat {
             controller.xp += xpValue;
             controller.plunder += plunderValue;
             Destroy();
-        } else if (object instanceof Projectile){
+        } else if (object instanceof Projectile && HP > 0){
             object.killOnNextTick = true;
             Projectile p = (Projectile) object;
-            if(p.isPlayerProjectile)
-                controller.xp += xpValue;
-            Destroy();
+            if(p.isPlayerProjectile) {
+                HP -= p.damage;
+                if (HP <= 0) {
+                    controller.xp += xpValue;
+                    Destroy();
+                }
+            }
         }
     }
 }

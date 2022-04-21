@@ -162,6 +162,20 @@ public class GameController implements Screen {
         } while (isCollision);
         physicsObjects.add(l);
 
+        // Spawn the Blessing somewhere...
+        Blessing b;
+        do {
+            b = new Blessing(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize);
+            isCollision = false;
+            for (PhysicsObject current : physicsObjects) {
+                if (b.CheckCollisionWith(current)) {
+                    isCollision = true;
+                    break;
+                }
+            }
+        } while (isCollision);
+        physicsObjects.add(b);
+
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
                 (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);

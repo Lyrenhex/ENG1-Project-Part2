@@ -27,6 +27,10 @@ public class PlayerBoat extends Boat{
 
     float timeSinceLastHeal = 0;
 
+    boolean isImmune = false;
+    float timeImmune = 0.0f;
+    final float maxTimeImmune = 5.0f;
+
     public ProjectileData projectileType;
 
     public PlayerBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize) {
@@ -57,6 +61,12 @@ public class PlayerBoat extends Boat{
     @Override
     public void Update(float delta) {
         timeSinceLastShot += delta;
+
+        if (isImmune) timeImmune += delta;
+        if (timeImmune > maxTimeImmune) {
+            isImmune = false;
+            timeImmune = 0.0f;
+        }
 
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
             Move(delta, 1);
@@ -98,16 +108,20 @@ public class PlayerBoat extends Boat{
             if(! p.isPlayerProjectile)
             {
                 p.killOnNextTick = true;
-                HP -= (p.damage - defense);
+                if (!isImmune) {
+                    HP -= (p.damage - defense);
+                }
             }
         }
-        else if(other.getClass() == EnemyCollege.class || other.getClass() == PlayerCollege.class)
-        {
-            controller.gameOver();
-        }
-        else if (other.getClass() == NeutralBoat.class)
-        {
-            HP -= 50;
+        else if (!isImmune) { // prevent damage or auto-loss whilst immune.
+            if(other.getClass() == EnemyCollege.class || other.getClass() == PlayerCollege.class)
+            {
+                controller.gameOver();
+            }
+            else if (other.getClass() == NeutralBoat.class)
+            {
+                HP -= 50;
+            }
         }
     }
 
@@ -193,6 +207,19 @@ public class PlayerBoat extends Boat{
                 defense = 0;
                 projectileDamageMultiplier /= 2;
         }
+    }
+
+    public void setImmune() {
+        timeImmune = 0.0f;
+        isImmune = true;
+    }
+
+    public boolean isImmune() {
+        return isImmune;
+    }
+
+    public float remainingTimeImmune() {
+        return maxTimeImmune - timeImmune;
     }
 }
 
