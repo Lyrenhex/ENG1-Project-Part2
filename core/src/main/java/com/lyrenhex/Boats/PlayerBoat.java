@@ -27,6 +27,7 @@ public class PlayerBoat extends Boat{
 
     float timeSinceLastHeal = 0;
 
+    boolean hasExtraCannons = false;
     boolean isImmune = false;
     float timeImmune = 0.0f;
     final float maxTimeImmune = 5.0f;
@@ -131,6 +132,17 @@ public class PlayerBoat extends Boat{
                                          rotation, projectileType, true, this,
                                          projectileDamageMultiplier, projectileSpeedMultiplier);
         controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
+
+        if (hasExtraCannons) {
+            proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                    rotation - 90, projectileType, true, this,
+                    projectileDamageMultiplier, projectileSpeedMultiplier);
+            controller.NewPhysicsObject(proj);
+            proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                    rotation + 90, projectileType, true, this,
+                    projectileDamageMultiplier, projectileSpeedMultiplier);
+            controller.NewPhysicsObject(proj);
+        }
     }
 
     @Override
@@ -209,17 +221,39 @@ public class PlayerBoat extends Boat{
         }
     }
 
+    /**
+     * Resets the immunity timer and makes the player immune.
+     */
     public void setImmune() {
         timeImmune = 0.0f;
         isImmune = true;
     }
 
+    /**
+     * Returns whether the player is immune or not at the given time.
+     *
+     * @return whether the player is immune at the time.
+     */
     public boolean isImmune() {
         return isImmune;
     }
 
+    /**
+     * Returns the time left on the player's immunity, which will be the maximum
+     * allowed immunity time if the player is not immune when this method is called.
+     *
+     * @return the time left on the player's immunity.
+     */
     public float remainingTimeImmune() {
         return maxTimeImmune - timeImmune;
+    }
+
+    /**
+     * Grants the player the 'Extra Cannons' power-up, which adds two bonus projectiles
+     * firing to each side when the player fires a cannonball.
+     */
+    public void addExtraCannons() {
+        hasExtraCannons = true;
     }
 }
 
