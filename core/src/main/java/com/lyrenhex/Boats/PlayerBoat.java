@@ -12,6 +12,9 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameGenerics.Upgrades;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.GeneralControl.Difficulty;
+import com.lyrenhex.Obstacles.ChoppyWaves;
+import com.lyrenhex.Obstacles.Obstacle;
+import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
 
@@ -30,7 +33,9 @@ public class PlayerBoat extends Boat{
     boolean hasExtraCannons = false;
     boolean isImmune = false;
     float timeImmune = 0.0f;
-    final float maxTimeImmune = 5.0f;
+    final float maxTimeImmune = 15.0f;
+
+    boolean invertedControl = false;
 
     public ProjectileData projectileType;
 
@@ -76,10 +81,16 @@ public class PlayerBoat extends Boat{
             Move(delta, -1);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            Turn(delta, -1);
+            if (invertedControl)
+                Turn(delta, 1);
+            else
+                Turn(delta, -1);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            Turn(delta, 1);
+            if (invertedControl)
+                Turn(delta, -1);
+            else
+                Turn(delta, 1);
         }
 
         if(((Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !controller.hud.hoveringOverButton) // make sure we don't fire when hovering over a button and clicking
@@ -95,6 +106,9 @@ public class PlayerBoat extends Boat{
             controller.gameOver();
         }
 
+        // if controls are inverted, disable that
+        // OnCollision is called after Update each frame, so it will reassert inverted controls if appropriate.
+        invertedControl = false;
     }
     
     /*
@@ -115,13 +129,26 @@ public class PlayerBoat extends Boat{
             }
         }
         else if (!isImmune) { // prevent damage or auto-loss whilst immune.
-            if(other.getClass() == EnemyCollege.class || other.getClass() == PlayerCollege.class)
+            if(other instanceof EnemyCollege || other instanceof PlayerCollege)
             {
                 controller.gameOver();
             }
-            else if (other.getClass() == NeutralBoat.class)
+            else if (other instanceof Boat || other instanceof Obstacle)
             {
                 HP -= 50;
+            }
+            else if (other instanceof Storm)
+            {
+                Storm s = (Storm) other;
+                if (s.isDamageAllowed()) {
+                    HP -= 5;
+                    controller.xp += 10; // grant bonus XP for sailing through storms.
+                    s.DamageDealt();
+                }
+            }
+            else if (other instanceof ChoppyWaves)
+            {
+                invertedControl = true;
             }
         }
     }

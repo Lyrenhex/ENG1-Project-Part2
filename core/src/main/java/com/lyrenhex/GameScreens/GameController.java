@@ -21,7 +21,9 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 import com.lyrenhex.Level.GameMap;
+import com.lyrenhex.Obstacles.ChoppyWaves;
 import com.lyrenhex.Obstacles.LongBoi;
+import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.UI.HUD;
 
@@ -57,7 +59,6 @@ public class GameController implements Screen {
 
     // projectile variables
     public ProjectileDataHolder projectileHolder;
-    public ProjectileDataHolder projectileDataHolder;
 
 
     public GameController(eng1game game){ //passes the game class so that we can change scene back later
@@ -175,6 +176,16 @@ public class GameController implements Screen {
             }
         } while (isCollision);
         physicsObjects.add(b);
+
+        // TODO: spawn rocks + shipwrecks (requires graphics...)
+
+        // Spawn the Storm somewhere; collisions do not matter for weather effects.
+        Storm s = new Storm(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
+        physicsObjects.add(s);
+
+        // Spawn the Choppy Waves somewhere; collisions do not matter for weather effects.
+        ChoppyWaves c = new ChoppyWaves(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
+        physicsObjects.add(c);
 
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
