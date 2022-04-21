@@ -1,7 +1,6 @@
 package com.lyrenhex.GameScreens;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -22,6 +21,7 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 import com.lyrenhex.Level.GameMap;
+import com.lyrenhex.Obstacles.LongBoi;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.UI.HUD;
 
@@ -151,7 +151,7 @@ public class GameController implements Screen {
         // Spawn Long Boi somewhere...
         LongBoi l;
         do {
-            l = new LongBoi(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize);
+            l = new LongBoi(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
             isCollision = false;
             for (PhysicsObject current : physicsObjects) {
                 if (l.CheckCollisionWith(current)) {
@@ -266,7 +266,7 @@ public class GameController implements Screen {
         for(int i=0; i < physicsObjects.size(); i++)
         {
             PhysicsObject current = physicsObjects.get(i);
-            if(current instanceof EnemyCollege || current instanceof PlayerCollege)
+            if(current instanceof College)
             { //colleges need a slightly different update method signature, so use that specifically for them
                 current.Update(delta, playerBoat);
             }
