@@ -39,15 +39,15 @@ public class GameWinScreen implements Screen{
             game.gotoScreen(Screens.menuScreen);
         }
 
-		//do draws
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		batch.begin(); //start batch
-		font.getData().setScale(1);
-		//the below line centres the text on the centre of the screen
-		font.draw(batch, winTextLayout, Gdx.graphics.getWidth()/2 - winTextLayout.width/2 ,Gdx.graphics.getHeight()/2 + winTextLayout.height/2);
-		batch.end(); //end batch
+        //do draws
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        batch.begin(); //start batch
+        font.getData().setScale(1);
+        //the below line centres the text on the centre of the screen
+        font.draw(batch, winTextLayout, Gdx.graphics.getWidth()/2 - winTextLayout.width/2 ,Gdx.graphics.getHeight()/2 + winTextLayout.height/2);
+        batch.end(); //end batch
     }
 
     @Override

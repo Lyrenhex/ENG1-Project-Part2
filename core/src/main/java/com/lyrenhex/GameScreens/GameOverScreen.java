@@ -37,24 +37,24 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-		if(Gdx.input.isKeyJustPressed(Keys.R))
-		{
-			game.gotoScreen(Screens.gameScreen);
-		}
+        if(Gdx.input.isKeyJustPressed(Keys.R))
+        {
+            game.gotoScreen(Screens.gameScreen);
+        }
         else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
         {
             game.gotoScreen(Screens.menuScreen);
         }
 
-		//do draws
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		batch.begin(); //start batch
-		font.getData().setScale(1);
-		//the below line centres the text on the centre of the screen
-		font.draw(batch, gameOverTextLayout, Gdx.graphics.getWidth()/2 - gameOverTextLayout.width/2 ,Gdx.graphics.getHeight()/2 + gameOverTextLayout.height/2);
-		batch.end(); //end batch
+        //do draws
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        batch.begin(); //start batch
+        font.getData().setScale(1);
+        //the below line centres the text on the centre of the screen
+        font.draw(batch, gameOverTextLayout, Gdx.graphics.getWidth()/2 - gameOverTextLayout.width/2 ,Gdx.graphics.getHeight()/2 + gameOverTextLayout.height/2);
+        batch.end(); //end batch
     }
 
     @Override

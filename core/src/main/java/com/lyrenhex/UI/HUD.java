@@ -30,6 +30,7 @@ public class HUD extends GameObject {
 
     GlyphLayout hpTextLayout;
     GlyphLayout timerTextLayout;
+    GlyphLayout immunityTextLayout;
     WaterBackground bg;
 
     Stage stage;
@@ -68,11 +69,12 @@ public class HUD extends GameObject {
         
         stage = new Stage(); // Lets us implement interactable UI elements
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
-		hpTextLayout = new GlyphLayout();
-		timerTextLayout = new GlyphLayout();
+        hpTextLayout = new GlyphLayout();
+        timerTextLayout = new GlyphLayout();
         xpTextLayout = new GlyphLayout();
-		plunderTextLayout = new GlyphLayout();
-		Gdx.input.setInputProcessor(stage);
+        plunderTextLayout = new GlyphLayout();
+        immunityTextLayout = new GlyphLayout();
+        Gdx.input.setInputProcessor(stage);
         
         DrawUpgradeButton(); // put this in its own function to make this function look a bit cleaner
     }
@@ -84,6 +86,7 @@ public class HUD extends GameObject {
         xpTextLayout.setText(font, "XP: " + Integer.toString(gc.xp));
         timerTextLayout.setText(font, "Time: " + Math.round(gc.timer));
         plunderTextLayout.setText(font, "Plunder: " + Integer.toString(gc.plunder));
+        immunityTextLayout.setText(font, "IMMUNE FOR " + Math.round(gc.playerBoat.remainingTimeImmune()) + " SECONDS");
         font.getData().setScale(1);
     }
 
@@ -95,6 +98,10 @@ public class HUD extends GameObject {
         font.draw(batch, timerTextLayout, 5, gc.map.camera.viewportHeight - 50);
         font.draw(batch, xpTextLayout, gc.map.camera.viewportWidth - xpTextLayout.width - 5, gc.map.camera.viewportHeight - 50);
         font.draw(batch, plunderTextLayout, gc.map.camera.viewportWidth - plunderTextLayout.width - 5, gc.map.camera.viewportHeight - 10);
+
+        if (gc.playerBoat.isImmune()) {
+            font.draw(batch, immunityTextLayout, (gc.map.camera.viewportWidth / 2) - (immunityTextLayout.width / 2), 10 + immunityTextLayout.height);
+        }
 
         stage.draw();
     }
@@ -148,11 +155,11 @@ public class HUD extends GameObject {
      */
     public void ToggleMenu(){
         // Put the XP menu drawing calls in its own function so that render doesn't get too cluttered
-    	
-    	// Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
+        
+        // Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
         if(!upgradeMenuInitialised) InitialiseMenu();
         
-    	// Add/re-add the UI elements back to the stage
+        // Add/re-add the UI elements back to the stage
         if(upgradeMenuOpen){
             UpdateMenu();
             stage.addActor(upgradeMenuBackground);
