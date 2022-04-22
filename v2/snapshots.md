@@ -8,7 +8,7 @@ These are the weekly snapshots for our Gantt Chart, the more full a bar is, the 
 ## Weekly Gantt Chart Snapshots
 
 ### 2022-03-18
-
+test
 ![gantt chart for 2022-03-18](/img/week1-2.png)
 
 ### 2022-03-25
