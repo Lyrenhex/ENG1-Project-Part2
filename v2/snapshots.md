@@ -21,12 +21,13 @@ Continued testing while also adding new features to the game.
 
 ### 2022-04-01
 
-Split the change report into seperate parts in order to track progress of each individual part.
-the risk assessment report was also complete. 
+Split the change report into seperate parts in order to track progress of each individual part and the risk assessment report was also complete. 
 
 ![gantt chart for 2022-04-01](/img/week4.png)
 
 ### 2022-04-08
+
+Continued working on the parts we've already begun.
 
 ![gantt chart for 2022-04-08](/img/week5.png)
 
@@ -36,4 +37,7 @@ Began continous integration and continued to progress on all other parts except 
 ![gantt chart for 2022-04-15](/img/week6.png)
 
 ### 2022-04-22 
+
+More progress was made on each part and all are almost complete.
+
 ![gantt chart for 2022-04-22](/img/week7.png)
