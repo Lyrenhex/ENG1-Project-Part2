@@ -8,14 +8,21 @@ These are the weekly snapshots for our Gantt Chart, the more full a bar is, the 
 ## Weekly Gantt Chart Snapshots
 
 ### 2022-03-18
-test
+
+Began testing parts of the game that were already implemented in part 1.
+
 ![gantt chart for 2022-03-18](/img/week1-2.png)
 
 ### 2022-03-25
 
+Continued testing while also adding new features to the game.
+
 ![gantt chart for 2022-03-25](/img/week3.png)
 
 ### 2022-04-01
+
+Split the change report into seperate parts in order to track progress of each individual part.
+the risk assessment report was also complete. 
 
 ![gantt chart for 2022-04-01](/img/week4.png)
 
@@ -24,6 +31,8 @@ test
 ![gantt chart for 2022-04-08](/img/week5.png)
 
 ### 2022-04-15
+Began continous integration and continued to progress on all other parts except for testing.
+
 ![gantt chart for 2022-04-15](/img/week6.png)
 
 ### 2022-04-22 
