@@ -23,7 +23,7 @@ public class PlayerBoat extends Boat{
     float projectileSpeedMultiplier = 1;
 
     // The higher the defense, the stronger the player, this is subtracted from the damage
-    int defense = 1;
+    int defense = 10;
 
     float timeSinceLastHeal = 0;
 
