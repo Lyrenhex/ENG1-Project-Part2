@@ -22,3 +22,6 @@ These are the weekly snapshots for our Gantt Chart, the more full a bar is, the 
 ### 2022-04-08
 
 ![gantt chart for 2022-04-08](/img/week5.png)
+
+### 2022-04-15
+![gantt chart for 2022-04-15](/img/week6.png)
