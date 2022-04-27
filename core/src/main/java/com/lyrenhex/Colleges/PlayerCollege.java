@@ -1,5 +1,6 @@
 package com.lyrenhex.Colleges;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,6 +30,10 @@ public class PlayerCollege extends College{
         this.position = position;
         collisionPolygon = new Polygon(new float[]{0,0,100,0,100,100,0,100});
         collisionPolygon.setPosition(position.x, position.y);
+    }
+
+    public PlayerCollege(PlayerCollegeState state) {
+        this(state.position, new Texture(Gdx.files.internal(state.aliveTexturePath)), new Texture(Gdx.files.internal(state.islandTexturePath)));
     }
 
     @Override

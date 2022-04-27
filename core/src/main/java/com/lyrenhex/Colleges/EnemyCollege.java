@@ -17,6 +17,7 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.Saves.EnemyCollegeState;
 
 /**
@@ -57,6 +58,14 @@ public class EnemyCollege extends College {
         HP = maxHP;
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
         hpText = new GlyphLayout();
+        hpText.setText(font, HP + "/" + maxHP);
+    }
+
+    public EnemyCollege(GameController controller, EnemyCollegeState state)
+    {
+        this(state.position, new Texture(Gdx.files.internal(state.aliveTexturePath)), new Texture(Gdx.files.internal(state.islandTexturePath)), controller, ProjectileDataHolder.fromEnum(state.projectileType), state.maxHP);
+        this.invulnerable = state.invulnerable;
+        this.HP = state.HP;
         hpText.setText(font, HP + "/" + maxHP);
     }
 

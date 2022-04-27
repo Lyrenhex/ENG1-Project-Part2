@@ -67,6 +67,13 @@ public class LongBoi extends College {
         hpText.setText(font, HP + "/" + maxHP);
     }
 
+    public LongBoi(GameController controller, LongBoiState state)
+    {
+        this(controller, state.position);
+        this.HP = state.HP;
+        hpText.setText(font, HP + "/" + maxHP);
+    }
+
     /**
      * Returns the x-coordinate of the center of the sprite.
      *

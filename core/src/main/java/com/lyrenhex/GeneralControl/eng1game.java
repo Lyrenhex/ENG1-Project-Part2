@@ -1,6 +1,7 @@
 package com.lyrenhex.GeneralControl;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -11,6 +12,10 @@ import com.lyrenhex.GameScreens.Menu;
 import com.lyrenhex.GameScreens.Screens;
 import com.lyrenhex.GameScreens.Splash;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /**
  * The core class of the game, which handles high level logic and screen transitions.
  */
@@ -20,6 +25,7 @@ public class eng1game extends Game {
     Menu menuScreen;
     GameController gameScreen;
 
+    public String savePath;
     public String gameState;
 
     public boolean timeUp = false;
@@ -28,9 +34,24 @@ public class eng1game extends Game {
     
     @Override
     public void create () {
+        savePath = Gdx.files.external("21direction.save").file().getAbsolutePath();
+        // load the save game if one exists.
+        if (Files.exists(Path.of(savePath))) {
+            try {
+                gameState = Files.readString(Path.of(savePath));
+                gameStarted = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         // create a menu and game screen, then switch to a new splash screen
         menuScreen = new Menu(this);
-        gameScreen = new GameController(this);
+        if (gameStarted) {
+            gameScreen = new GameController(this, gameState);
+        } else {
+            gameScreen = new GameController(this);
+        }
         gotoScreen(Screens.splashScreen);
     }
 

@@ -19,6 +19,7 @@ import com.lyrenhex.Obstacles.Obstacle;
 import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.Saves.PlayerBoatState;
 import com.lyrenhex.Saves.SaveState;
 
@@ -59,6 +60,37 @@ public class PlayerBoat extends Boat{
         collisionPolygon.setRotation(rotation - 90);
 
         sprite.setPosition(initialPosition.x, initialPosition.y);
+
+        this.mapSize = mapSize;
+        mapBounds = new Array<Vector2>(true, 4);
+        mapBounds.add(new Vector2(0,0));
+        mapBounds.add(new Vector2(mapSize.x, 0));
+        mapBounds.add(new Vector2(mapSize.x, mapSize.y));
+        mapBounds.add(new Vector2(0, mapSize.y));
+    }
+
+    public PlayerBoat(GameController controller, PlayerBoatState state, Vector2 mapSize) {
+        this.controller = controller;
+
+        this.HP = state.HP;
+        this.maxHP = state.maxHP;
+        this.speed = state.speed;
+        this.turnSpeed = state.turnSpeed;
+        this.defense = state.defense;
+        this.position = state.position;
+        this.projectileDamageMultiplier = state.projectileDamageMultiplier;
+        this.projectileSpeedMultiplier = state.projectileSpeedMultiplier;
+        this.hasExtraCannons = state.hasExtraCannons;
+        this.isImmune = state.isImmune;
+        this.timeImmune = state.timeImmune;
+        this.projectileType = ProjectileDataHolder.fromEnum(state.projectileType);
+
+        collisionPolygon.setPosition(position.x + GetCenterX()/2, position.y - GetCenterY()/2 - 10);
+        collisionPolygon.setOrigin(25,50);
+        collisionPolygon.setRotation(rotation - 90);
+
+        sprite.setPosition(position.x, position.y);
+        sprite.setTexture(new Texture(Gdx.files.internal(state.texturePath)));
 
         this.mapSize = mapSize;
         mapBounds = new Array<Vector2>(true, 4);

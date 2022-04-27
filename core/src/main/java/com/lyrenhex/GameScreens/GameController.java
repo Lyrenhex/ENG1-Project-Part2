@@ -198,6 +198,89 @@ public class GameController implements Screen {
                 (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
 
+    public GameController(eng1game game, String saveData) {
+        this.game = game;
+        gameObjects = new ArrayList<GameObject>();
+        physicsObjects = new ArrayList<PhysicsObject>();
+        colleges = new ArrayList<College>();
+        projectileHolder = new ProjectileDataHolder();
+        hud = new HUD(this);
+        mapSize = new Vector2(3000, 3000);
+
+        batch = new SpriteBatch();
+        Random rd = new Random();
+
+        Gson gson = new Gson();
+        SaveState state = gson.fromJson(saveData, SaveState.class);
+        timer = state.timer;
+        xp = state.xp;
+        plunder = state.plunder;
+
+        if (state.getChoppyWaves() != null) {
+            ChoppyWaves c = new ChoppyWaves(state.getChoppyWaves().position);
+            physicsObjects.add(c);
+        }
+
+        playerBoat = new PlayerBoat(this, state.getPlayer(), mapSize.cpy());
+        physicsObjects.add(playerBoat);
+
+        PlayerCollege p = new PlayerCollege(state.getPlayerCollege());
+        physicsObjects.add(p); //add college to physics object, for updates
+        colleges.add(p); //also add a reference to the colleges list
+
+        boolean isCollision;
+        EnemyCollege e;
+        for (EnemyCollegeState es : state.getEnemyColleges()) {
+            e = new EnemyCollege(this, es);
+
+            if (es.projectileType == ProjectileDataHolder.Option.Boss) bossCollege = e;
+
+            physicsObjects.add(e);
+            colleges.add(e);
+
+            CollegeBoat b;
+            for (int j = 0; j < es.numBoats; j++) {
+                do {
+                    b = new CollegeBoat(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize, e);
+                    isCollision = false;
+                    for (PhysicsObject current : physicsObjects) {
+                        if (b.CheckCollisionWith(current)) {
+                            isCollision = true;
+                            break;
+                        }
+                    }
+                } while (isCollision);
+                physicsObjects.add(b);
+            }
+        }
+
+        if (state.getLongBoi() != null) {
+            LongBoi l = new LongBoi(this, state.getLongBoi());
+            physicsObjects.add(l);
+        }
+
+        if (state.getBlessing() != null) {
+            Blessing b = new Blessing(this, state.getBlessing().position, mapSize);
+            physicsObjects.add(b);
+        }
+
+        Obstacle o;
+        for (ObstacleState os : state.getObstacles()) {
+            o = new Obstacle(this, os.position, new Texture(Gdx.files.internal(os.texturePath)));
+            physicsObjects.add(o);
+        }
+
+        if (state.getStorm() != null) {
+            // Spawn the Storm somewhere; collisions do not matter for weather effects.
+            Storm s = new Storm(this, state.getStorm().position);
+            physicsObjects.add(s);
+        }
+
+        //create the moving camera/map borders
+        map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
+                (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+    }
+
     /**
      * Method to set the difficulty, using the method defined on the PlayerBoat (which is the only object affected by
      * difficulty).

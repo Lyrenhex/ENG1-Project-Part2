@@ -1,12 +1,15 @@
 package com.lyrenhex.Saves;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 
 public class PlayerBoatState {
     public float projectileDamageMultiplier;
@@ -18,7 +21,7 @@ public class PlayerBoatState {
     public boolean isImmune;
     public float timeImmune;
 
-    public ProjectileData projectileType;
+    public ProjectileDataHolder.Option projectileType;
 
     public int HP;
     public int maxHP;
@@ -26,7 +29,7 @@ public class PlayerBoatState {
     public float turnSpeed;
     public Vector2 position;
 
-    public Texture texture;
+    public String texturePath;
 
     public PlayerBoatState(int HP, int maxHP, float speed, float turnSpeed, int defense, Vector2 position, float projectileDamageMultiplier, float projectileSpeedMultiplier, boolean hasExtraCannons, boolean isImmune, float timeImmune, ProjectileData projectileType, Texture texture) {
         this.HP = HP;
@@ -40,7 +43,7 @@ public class PlayerBoatState {
         this.hasExtraCannons = hasExtraCannons;
         this.isImmune = isImmune;
         this.timeImmune = timeImmune;
-        this.projectileType = projectileType;
-        this.texture = texture;
+        this.projectileType = ProjectileDataHolder.toEnum(projectileType);
+        this.texturePath = ((FileTextureData) texture.getTextureData()).getFileHandle().path();
     }
 }

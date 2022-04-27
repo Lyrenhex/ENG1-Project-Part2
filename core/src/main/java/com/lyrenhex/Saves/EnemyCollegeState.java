@@ -1,8 +1,10 @@
 package com.lyrenhex.Saves;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 
 public class EnemyCollegeState {
     public int numBoats;
@@ -10,9 +12,9 @@ public class EnemyCollegeState {
     public boolean invulnerable;
 
     public Vector2 position;
-    public Texture aliveTexture;
-    public Texture islandTexture;
-    public ProjectileData projectileType;
+    public String aliveTexturePath;
+    public String islandTexturePath;
+    public ProjectileDataHolder.Option projectileType;
     public int maxHP;
     public int HP;
 
@@ -20,9 +22,9 @@ public class EnemyCollegeState {
         this.numBoats = numBoats;
         this.invulnerable = invulnerable;
         this.position = position;
-        this.aliveTexture = aliveTexture;
-        this.islandTexture = islandTexture;
-        this.projectileType = projectileType;
+        this.aliveTexturePath = ((FileTextureData) aliveTexture.getTextureData()).getFileHandle().path();
+        this.islandTexturePath = ((FileTextureData) islandTexture.getTextureData()).getFileHandle().path();
+        this.projectileType = ProjectileDataHolder.toEnum(projectileType);
         this.maxHP = maxHP;
         this.HP = HP;
     }

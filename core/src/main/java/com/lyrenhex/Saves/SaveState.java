@@ -1,13 +1,15 @@
 package com.lyrenhex.Saves;
 
 import com.google.gson.Gson;
+import com.lyrenhex.Boats.PlayerBoat;
+import com.lyrenhex.GameGenerics.PhysicsObject;
 
 import java.util.ArrayList;
 
 public class SaveState {
-    float timer;
-    int xp;
-    int plunder;
+    public float timer;
+    public int xp;
+    public int plunder;
 
     PlayerBoatState player;
     PlayerCollegeState playerCollege;
@@ -35,6 +37,38 @@ public class SaveState {
     public String serialise() {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public PlayerBoatState getPlayer() {
+        return player;
+    }
+
+    public PlayerCollegeState getPlayerCollege() {
+        return playerCollege;
+    }
+
+    public ArrayList<EnemyCollegeState> getEnemyColleges() {
+        return enemyColleges;
+    }
+
+    public BlessingState getBlessing() {
+        return blessing;
+    }
+
+    public ChoppyWavesState getChoppyWaves() {
+        return choppyWaves;
+    }
+
+    public LongBoiState getLongBoi() {
+        return longBoi;
+    }
+
+    public ArrayList<ObstacleState> getObstacles() {
+        return obstacles;
+    }
+
+    public StormState getStorm() {
+        return storm;
     }
 }
 
