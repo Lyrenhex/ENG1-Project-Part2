@@ -78,12 +78,24 @@ public class eng1game extends Game {
                 GameOverScreen gameOverScreen = new GameOverScreen(this, timeUp ? "Time Up! ESCAPE to go to menu, R to restart" : "You Died! ESCAPE to go to menu, R to restart");
                 gameScreen = new GameController(this);
                 gameStarted = false;
+                gameState = null;
+                try {
+                    Files.deleteIfExists(Path.of(savePath));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 setScreen(gameOverScreen);
                 break;
             case gameWinScreen:
                 GameWinScreen gameWinScreen = new GameWinScreen(this);
                 gameScreen = new GameController(this);
                 gameStarted = false;
+                gameState = null;
+                try {
+                    Files.deleteIfExists(Path.of(savePath));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 setScreen(gameWinScreen);
         }
     }
