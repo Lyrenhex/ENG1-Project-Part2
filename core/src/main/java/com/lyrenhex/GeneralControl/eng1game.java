@@ -19,7 +19,9 @@ public class eng1game extends Game {
     Texture img;
     Menu menuScreen;
     GameController gameScreen;
-    
+
+    public String gameState;
+
     public boolean timeUp = false;
 
     public boolean gameStarted = false;

@@ -12,9 +12,7 @@ import java.lang.Math;
  */
 public abstract class College extends PhysicsObject {
     protected int range;
-    int HP;
-    int damage;
-    int fireRate;
+    public int HP;
     protected Sprite aliveSprite;
     Sprite deadSprite;
     Sprite islandSprite;

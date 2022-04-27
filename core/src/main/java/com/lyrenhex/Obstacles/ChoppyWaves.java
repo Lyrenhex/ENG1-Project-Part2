@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lyrenhex.GameGenerics.PhysicsObject;
+import com.lyrenhex.Saves.ChoppyWavesState;
 
 /**
  * Class to handle choppy waves which the player may encounter.
@@ -62,4 +63,11 @@ public class ChoppyWaves extends PhysicsObject {
         waterTextureRegionDrawable.draw(batch, position.x, position.y, 500, 300);
     }
 
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public ChoppyWavesState getSaveState() {
+        return new ChoppyWavesState(position);
+    }
 }

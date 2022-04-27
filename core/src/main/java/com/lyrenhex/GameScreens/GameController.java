@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lyrenhex.Boats.*;
 import com.lyrenhex.Colleges.College;
 import com.lyrenhex.Colleges.EnemyCollege;
@@ -23,8 +27,10 @@ import com.lyrenhex.GeneralControl.eng1game;
 import com.lyrenhex.Level.GameMap;
 import com.lyrenhex.Obstacles.ChoppyWaves;
 import com.lyrenhex.Obstacles.LongBoi;
+import com.lyrenhex.Obstacles.Obstacle;
 import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
+import com.lyrenhex.Saves.*;
 import com.lyrenhex.UI.HUD;
 
 /**
@@ -264,6 +270,46 @@ public class GameController implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            // collect all of the states to save together from the physics objects list.
+            PlayerCollegeState playerCollege = null;
+            ArrayList<EnemyCollegeState> enemyColleges = new ArrayList<>();
+            BlessingState blessing = null;
+            ChoppyWavesState choppyWaves = null;
+            LongBoiState longBoi = null;
+            ArrayList<ObstacleState> obstacles = new ArrayList<>();
+            StormState storm = null;
+
+            // TODO: if we have time, refactoring such that these Objects inherit
+            // from some `SavableObject` (itself inheriting from PhysicsObject)
+            // to simplify the loop would be ideal.
+            for (PhysicsObject object : physicsObjects) {
+                if (object instanceof PlayerCollege) {
+                    playerCollege = ((PlayerCollege) object).getSaveState();
+                } else if (object instanceof EnemyCollege) {
+                    EnemyCollege college = (EnemyCollege) object;
+                    int numBoats = 0;
+                    for (PhysicsObject current : physicsObjects) {
+                        if (current instanceof CollegeBoat) {
+                            if (((CollegeBoat) current).college == college) {
+                                numBoats++;
+                            }
+                        }
+                    }
+                    enemyColleges.add(college.getSaveState(numBoats));
+                } else if (object instanceof Blessing) {
+                    blessing = ((Blessing) object).getSaveState();
+                } else if (object instanceof ChoppyWaves) {
+                    choppyWaves = ((ChoppyWaves) object).getSaveState();
+                } else if (object instanceof LongBoi) {
+                    longBoi = ((LongBoi) object).getSaveState();
+                } else if (object instanceof Obstacle) {
+                    obstacles.add(((Obstacle) object).getSaveState());
+                } else if (object instanceof Storm) {
+                    storm = ((Storm) object).getSaveState();
+                }
+            }
+            SaveState state = new SaveState(timer, xp, plunder, playerBoat.getSaveState(), playerCollege, enemyColleges, blessing, choppyWaves, longBoi, obstacles, storm);
+            game.gameState = state.serialise();
             this.game.gotoScreen(Screens.menuScreen);
         }
     }

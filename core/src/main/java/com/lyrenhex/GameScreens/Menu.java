@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.google.gson.Gson;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
+
+import java.io.FileWriter;
 
 /**
  * Menu screen for when the game is launched or paused.
@@ -47,6 +50,18 @@ public class Menu implements Screen {
         }
         else if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
         {
+            if (game.gameStarted) {
+                // Save the game state.
+                try {
+                    FileWriter writer = new FileWriter(Gdx.files.external("21direction.save").file().getAbsolutePath());
+                    writer.write(game.gameState);
+                    writer.flush();
+                    writer.close();
+                    System.out.println("Save written ==> " + Gdx.files.external("21direction.save").file().getAbsolutePath());
+                } catch (Exception exp) {
+                    System.out.println("Exception saving state: " + exp);
+                }
+            }
             Gdx.app.exit();
         }
         else if (!game.gameStarted) {

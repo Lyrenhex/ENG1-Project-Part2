@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
+import com.lyrenhex.Saves.StormState;
 
 /**
  * Class to handle Storms which the player may encounter.
@@ -41,5 +42,13 @@ public class Storm extends Weather {
      */
     public boolean isDamageAllowed() {
         return timeSinceLastDamage > timeBetweenDamage;
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public StormState getSaveState() {
+        return new StormState(position);
     }
 }

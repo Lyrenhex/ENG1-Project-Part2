@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.GameGenerics.PhysicsObject;
+import com.lyrenhex.Saves.PlayerCollegeState;
 
 /**
  * The friendly player college for healing.
@@ -52,6 +53,14 @@ public class PlayerCollege extends College{
     {
         islandSprite.draw(batch);
         aliveSprite.draw(batch);    
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public PlayerCollegeState getSaveState() {
+        return new PlayerCollegeState(position, aliveSprite.getTexture(), islandSprite.getTexture());
     }
 
 }

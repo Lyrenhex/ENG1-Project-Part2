@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
+import com.lyrenhex.Saves.ObstacleState;
 
 /**
  * Obstacle class to handle the fixed obstacles in the game world, such as rocks and shipwrecks.
@@ -60,5 +61,13 @@ public class Obstacle extends PhysicsObject {
     public float GetCenterY()
     {
         return sprite.getOriginY();
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public ObstacleState getSaveState() {
+        return new ObstacleState(position, sprite.getTexture());
     }
 }

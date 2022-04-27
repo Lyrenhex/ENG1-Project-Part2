@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -18,6 +19,8 @@ import com.lyrenhex.Obstacles.Obstacle;
 import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Saves.PlayerBoatState;
+import com.lyrenhex.Saves.SaveState;
 
 /**
  * The boat under player control - in practice, this class represents the player.
@@ -291,6 +294,14 @@ public class PlayerBoat extends Boat{
         sprite.setTexture(new Texture(Gdx.files.internal("img/boosterOn.png")));
         Upgrade(Upgrades.speed, 100);
         Upgrade(Upgrades.projectilespeed, 100);
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the player object.
+     * @return an object storing the state information of the player object.
+     */
+    public PlayerBoatState getSaveState() {
+        return new PlayerBoatState(HP, maxHP, speed, turnSpeed, defense, position, projectileDamageMultiplier, projectileSpeedMultiplier, hasExtraCannons, isImmune, timeImmune, projectileType, sprite.getTexture());
     }
 }
 

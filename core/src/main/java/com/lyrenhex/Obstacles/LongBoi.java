@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Saves.LongBoiState;
 
 /**
  * Class for the Long Boi world event, in which the player may defeat the neutral Long Boi in exchange for a damage
@@ -150,5 +151,13 @@ public class LongBoi extends College {
                 position.y + sprite.getHeight()/2),
                 shotAngle, projectileType, false, this));
         //instantiate a new bullet and pass a reference to the gamecontroller so it can be updated and drawn
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public LongBoiState getSaveState() {
+        return new LongBoiState(position, HP);
     }
 }
