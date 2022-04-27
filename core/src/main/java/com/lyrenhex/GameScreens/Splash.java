@@ -79,7 +79,7 @@ public class Splash implements Screen{
         
         if(fading && splash.getColor().a > 0) splash.setAlpha(splash.getColor().a - (Gdx.graphics.getDeltaTime() / 2));
         else if(splash.getColor().a <= 0) { 
-            game.gotoScreen(Screens.menuScreen);;
+            game.gotoScreen(Screens.menuScreen);
         }
         
         batch.end();

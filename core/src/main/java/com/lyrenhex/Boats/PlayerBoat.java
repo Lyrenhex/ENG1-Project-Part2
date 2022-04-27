@@ -45,7 +45,7 @@ public class PlayerBoat extends Boat{
     public ProjectileData projectileType;
 
     public PlayerBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize) {
-        this.projectileType = controller.projectileHolder.stock;
+        this.projectileType = ProjectileDataHolder.stock;
 
         this.controller = controller;
 

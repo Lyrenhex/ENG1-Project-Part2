@@ -114,7 +114,7 @@ public class GameController implements Screen {
         EnemyCollege e;
         for (int i = 0; i < 3; i++) {
             do {
-                e = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[i+1], islandTexture, this, projectileHolder.stock, 200);
+                e = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[i+1], islandTexture, this, ProjectileDataHolder.stock, 200);
                 isCollision = false;
                 for (PhysicsObject current : physicsObjects) {
                     if (e.CheckCollisionWith(current)) {
@@ -145,7 +145,7 @@ public class GameController implements Screen {
 
         do {
             bossCollege = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[4], islandTexture,
-                    this, projectileHolder.boss, 200);
+                    this, ProjectileDataHolder.boss, 200);
             isCollision = false;
             for (PhysicsObject current : physicsObjects) {
                 if (bossCollege.CheckCollisionWith(current)) {
@@ -195,7 +195,7 @@ public class GameController implements Screen {
 
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
-                (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+                playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
 
     public GameController(eng1game game, String saveData) {
@@ -278,7 +278,7 @@ public class GameController implements Screen {
 
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
-                (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+                playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
 
     /**

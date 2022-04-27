@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
  * when one would suffice.
  */
 public  class ProjectileDataHolder {
-    public enum Option { Stock, Enemy, Boss, Duck };
+    public enum Option { Stock, Enemy, Boss, Duck }
 
     public static ProjectileData stock;
     public static ProjectileData enemy;

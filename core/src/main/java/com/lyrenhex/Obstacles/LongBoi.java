@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 import com.lyrenhex.Saves.LongBoiState;
 
 /**
@@ -40,12 +41,10 @@ public class LongBoi extends College {
     {
         range = 500;
         gc = controller;
-        projectileType = gc.projectileHolder.duck;
+        projectileType = ProjectileDataHolder.duck;
 
         this.maxHP = 400;
         this.HP = maxHP;
-
-        gc = controller;
 
         this.position = position.cpy();
 
@@ -105,7 +104,7 @@ public class LongBoi extends College {
                 HP -= p.damage;
                 hpText.setText(font, HP + "/" + maxHP);
                 if(HP <= 0) {
-                    gc.playerBoat.projectileType = gc.projectileHolder.duck;
+                    gc.playerBoat.projectileType = ProjectileDataHolder.duck;
                     gc.xp += xpValue;
                     killOnNextTick = true;
                 }
