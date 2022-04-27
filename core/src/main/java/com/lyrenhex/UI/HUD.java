@@ -38,11 +38,23 @@ public class HUD extends GameObject {
     TextButton menuButton;
     TextButtonStyle menuButtonStyle;
 
+    TextButton shopButton;
+    TextButtonStyle shopButtonStyle;
+
     TextButton upgradeButton1;
     TextButtonStyle upgradeButton1Style;
 
     TextButton upgradeButton2;
     TextButtonStyle upgradeButton2Style;
+
+    TextButton buyBoosterButton;
+    TextButtonStyle buyBoosterButtonStyle;
+
+    TextButton buyHealButton;
+    TextButtonStyle buyHealButtonStyle;
+
+    TextButton buyCannonsButton;
+    TextButtonStyle buyCannonsButtonStyle;
 
     Image upgradeMenuBackground;
 
@@ -77,6 +89,7 @@ public class HUD extends GameObject {
         Gdx.input.setInputProcessor(stage);
         
         DrawUpgradeButton(); // put this in its own function to make this function look a bit cleaner
+        DrawShopButton();
     }
 
     @Override
@@ -109,7 +122,7 @@ public class HUD extends GameObject {
     // UI & Upgrade Functions
 
     /**
-     * Draws the upgrade button on the screen.
+     * Draws the exp upgrade button on the screen.
      */
     public void DrawUpgradeButton(){
         // Create the upgrade button and add it to the UI stage
@@ -117,8 +130,8 @@ public class HUD extends GameObject {
         menuButtonStyle.font = font;
         menuButtonStyle.fontColor = Color.BLACK;
         menuButtonStyle.up = new TextureRegionDrawable(new Texture("ui/button.png"));
-        menuButton = new TextButton("Upgrade", menuButtonStyle);
-        
+        menuButton = new TextButton("Exp Upgrade", menuButtonStyle);
+
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -145,9 +158,52 @@ public class HUD extends GameObject {
         });
 
         menuButton.setScale(1f, 1f);
-        menuButton.setPosition(Gdx.graphics.getWidth()/2 - menuButton.getWidth()/2, Gdx.graphics.getHeight() - menuButton.getHeight());
+        menuButton.setPosition(Gdx.graphics.getWidth()/3 - menuButton.getWidth()/2, Gdx.graphics.getHeight() - menuButton.getHeight());
 
         stage.addActor(menuButton);
+    }
+
+
+    /**
+     * Draws the shop upgrade button on the screen.
+     */
+    public void DrawShopButton(){
+        // Create the shop button and add it to the UI stage
+        shopButtonStyle = new TextButtonStyle();
+        shopButtonStyle.font = font;
+        shopButtonStyle.fontColor = Color.BLACK;
+        shopButtonStyle.up = new TextureRegionDrawable(new Texture("ui/button.png"));
+        shopButton = new TextButton("Shop", menuButtonStyle);
+
+        shopButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // do some actions
+                upgradeMenuOpen = !upgradeMenuOpen;
+                ToggleMenu();
+            }
+
+            // Giving them enter and exit functions so that the player can't fire with left click while hovering over a button.
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = true;
+                    System.out.println("Hovering over");
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = false;
+                }
+            }
+        });
+
+        shopButton.setScale(1f, 1f);
+        shopButton.setPosition(2*Gdx.graphics.getWidth()/3 - shopButton.getWidth()/2, Gdx.graphics.getHeight() - shopButton.getHeight());
+
+        stage.addActor(shopButton);
     }
 
     /**
