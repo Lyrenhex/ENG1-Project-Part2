@@ -71,6 +71,11 @@ public class GameController implements Screen {
         mapSize = new Vector2(3000, 3000);
 
         batch = new SpriteBatch();
+        Random rd = new Random();
+
+        // Spawn the Choppy Waves somewhere; collisions do not matter for weather effects.
+        ChoppyWaves c = new ChoppyWaves(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
+        physicsObjects.add(c);
 
         // Create the player boat and place it in the centre of the screen
         playerBoat = new PlayerBoat(this, new Vector2(200,200), mapSize.cpy());
@@ -79,7 +84,6 @@ public class GameController implements Screen {
         // this section creates a array of textures for the colleges, shuffles it and assigns to
         // the created colleges
         Texture[] collegeTextures = new Texture[10];
-        Random rd = new Random();
         for(int i=0; i < 9; i++)
         {
             collegeTextures[i] = new Texture("img/castle" + (i+1) + ".png");
@@ -182,10 +186,6 @@ public class GameController implements Screen {
         // Spawn the Storm somewhere; collisions do not matter for weather effects.
         Storm s = new Storm(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
         physicsObjects.add(s);
-
-        // Spawn the Choppy Waves somewhere; collisions do not matter for weather effects.
-        ChoppyWaves c = new ChoppyWaves(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
-        physicsObjects.add(c);
 
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),

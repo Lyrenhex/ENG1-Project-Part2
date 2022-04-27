@@ -23,7 +23,7 @@ public class Blessing extends Boat {
 
         this.position = position;
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("img/lightray.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("img/CharlieJeffery.png")));
         sprite.setSize(100, 100);
         sprite.setOrigin(50, 50);
 

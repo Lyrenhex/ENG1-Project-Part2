@@ -2,6 +2,7 @@ package com.lyrenhex.Boats;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -281,6 +282,15 @@ public class PlayerBoat extends Boat{
      */
     public void addExtraCannons() {
         hasExtraCannons = true;
+    }
+
+    /**
+     * Enables the booster for the player.
+     */
+    public void enableBooster() {
+        sprite.setTexture(new Texture(Gdx.files.internal("img/boosterOn.png")));
+        Upgrade(Upgrades.speed, 100);
+        Upgrade(Upgrades.projectilespeed, 100);
     }
 }
 

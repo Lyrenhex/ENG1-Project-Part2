@@ -48,7 +48,11 @@ public class AssetExistsTests {
         assetTest("img/water3.png");
         assetTest("img/longboi.png");
         assetTest("img/duck.png");
-        assetTest("img/lightray.jpg");
+        assetTest("img/CharlieJeffery.png");
+        assetTest("img/boosterOff.png");
+        assetTest("img/boosterOn.png");
+        assetTest("img/choppyWater1.png");
+        assetTest("img/choppyWater2.jpg");
     }
     
     @Test
