@@ -52,7 +52,7 @@ public class AssetExistsTests {
         assetTest("img/boosterOff.png");
         assetTest("img/boosterOn.png");
         assetTest("img/choppyWater1.png");
-        assetTest("img/choppyWater2.jpg");
+        assetTest("img/choppyWater2.png");
     }
     
     @Test
