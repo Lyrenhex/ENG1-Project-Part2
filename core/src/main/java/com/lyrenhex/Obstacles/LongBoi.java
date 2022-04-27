@@ -48,7 +48,7 @@ public class LongBoi extends College {
 
         this.position = position.cpy();
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("img/longboi.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("img/longBoi.png")));
         sprite.setSize(100, 100);
         sprite.setOrigin(50, 50);
 
