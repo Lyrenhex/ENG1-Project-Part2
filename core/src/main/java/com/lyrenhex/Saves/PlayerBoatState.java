@@ -42,7 +42,5 @@ public class PlayerBoatState {
         this.timeImmune = timeImmune;
         this.projectileType = projectileType;
         this.texture = texture;
-
-        System.out.println("HP: " + this.HP);
     }
 }
