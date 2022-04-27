@@ -33,7 +33,7 @@ public class Menu implements Screen {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
         menuTextLayout = new GlyphLayout(); //layouts can be used to manage text to allow it to be centred
-        menuTextLayout.setText(font, "press ENTER to resume game\npress ESCAPE to quit");
+        menuTextLayout.setText(font, "press ENTER to resume game\npress ESCAPE to save and quit\n(will save to: " + Gdx.files.external("21direction.save").file().getAbsolutePath() + ")");
         if (!game.gameStarted) {
             menuTextLayout.setText(font, "press ENTER to start on normal difficulty\npress E to start on easy difficulty\npress H to start on hard difficulty\npress ESCAPE to quit");
         }
