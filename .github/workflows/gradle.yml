@@ -29,3 +29,13 @@ jobs:
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
         arguments: build
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: desktop/build/libs/desktop-1.0.jar
+    - name: Archive testing reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: testing-reports
+        path: core/build/reports/

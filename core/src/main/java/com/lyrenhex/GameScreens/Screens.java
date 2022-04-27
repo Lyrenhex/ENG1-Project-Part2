@@ -1,5 +1,8 @@
 package com.lyrenhex.GameScreens;
 
-public enum Screens{ // this enum represents all the screens the game can switch to
-	splashScreen, menuScreen, gameScreen, gameOverScreen, gameWinScreen
+/**
+ * The set of screens which the game may switch between.
+ */
+public enum Screens{
+    splashScreen, menuScreen, gameScreen, gameOverScreen, gameWinScreen
 }

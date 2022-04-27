@@ -22,11 +22,15 @@ import com.lyrenhex.GameGenerics.Upgrades;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Level.WaterBackground;
 
+/**
+ * Class managing the game's user interface components.
+ */
 public class HUD extends GameObject {
 
 
     GlyphLayout hpTextLayout;
     GlyphLayout timerTextLayout;
+    GlyphLayout immunityTextLayout;
     WaterBackground bg;
 
     Stage stage;
@@ -65,11 +69,12 @@ public class HUD extends GameObject {
         
         stage = new Stage(); // Lets us implement interactable UI elements
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
-		hpTextLayout = new GlyphLayout();
-		timerTextLayout = new GlyphLayout();
+        hpTextLayout = new GlyphLayout();
+        timerTextLayout = new GlyphLayout();
         xpTextLayout = new GlyphLayout();
-		plunderTextLayout = new GlyphLayout();
-		Gdx.input.setInputProcessor(stage);
+        plunderTextLayout = new GlyphLayout();
+        immunityTextLayout = new GlyphLayout();
+        Gdx.input.setInputProcessor(stage);
         
         DrawUpgradeButton(); // put this in its own function to make this function look a bit cleaner
     }
@@ -81,6 +86,7 @@ public class HUD extends GameObject {
         xpTextLayout.setText(font, "XP: " + Integer.toString(gc.xp));
         timerTextLayout.setText(font, "Time: " + Math.round(gc.timer));
         plunderTextLayout.setText(font, "Plunder: " + Integer.toString(gc.plunder));
+        immunityTextLayout.setText(font, "IMMUNE FOR " + Math.round(gc.playerBoat.remainingTimeImmune()) + " SECONDS");
         font.getData().setScale(1);
     }
 
@@ -93,11 +99,18 @@ public class HUD extends GameObject {
         font.draw(batch, xpTextLayout, gc.map.camera.viewportWidth - xpTextLayout.width - 5, gc.map.camera.viewportHeight - 50);
         font.draw(batch, plunderTextLayout, gc.map.camera.viewportWidth - plunderTextLayout.width - 5, gc.map.camera.viewportHeight - 10);
 
+        if (gc.playerBoat.isImmune()) {
+            font.draw(batch, immunityTextLayout, (gc.map.camera.viewportWidth / 2) - (immunityTextLayout.width / 2), 10 + immunityTextLayout.height);
+        }
+
         stage.draw();
     }
     
     // UI & Upgrade Functions
 
+    /**
+     * Draws the upgrade button on the screen.
+     */
     public void DrawUpgradeButton(){
         // Create the upgrade button and add it to the UI stage
         menuButtonStyle = new TextButtonStyle();
@@ -109,7 +122,6 @@ public class HUD extends GameObject {
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO Auto-generated method stub
                 // do some actions
                 upgradeMenuOpen = !upgradeMenuOpen;
                 ToggleMenu();
@@ -138,13 +150,16 @@ public class HUD extends GameObject {
         stage.addActor(menuButton);
     }
 
+    /**
+     * Toggles display of the menu.
+     */
     public void ToggleMenu(){
         // Put the XP menu drawing calls in its own function so that render doesn't get too cluttered
-    	
-    	// Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
+        
+        // Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
         if(!upgradeMenuInitialised) InitialiseMenu();
         
-    	// Add/re-add the UI elements back to the stage
+        // Add/re-add the UI elements back to the stage
         if(upgradeMenuOpen){
             UpdateMenu();
             stage.addActor(upgradeMenuBackground);
@@ -157,7 +172,9 @@ public class HUD extends GameObject {
         }
     }
 
-    // This function creates the menu for the first time, and also generates the first set of upgrades.
+    /**
+     * This function creates the menu for the first time, and also generates the first set of upgrades.
+     */
     public void InitialiseMenu(){
         // Create the background
         upgradeMenuBackground = new Image(new Texture("ui/background.png"));
@@ -197,7 +214,6 @@ public class HUD extends GameObject {
         upgradeButton1.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // TODO Auto-generated method stub
                 if(gc.xp >= upgrade1cost){
                     gc.xp -= upgrade1cost;
                     BuyUpgrade(1);
@@ -224,7 +240,6 @@ public class HUD extends GameObject {
         upgradeButton2.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // TODO Auto-generated method stub
                 // do some actions
                 if(gc.xp >= upgrade2cost){
                     gc.xp -= upgrade2cost;
@@ -258,9 +273,10 @@ public class HUD extends GameObject {
         stage.addActor(upgradeButton2);
     }
 
+    /**
+     * Updates the upgrade buttons (eg, after buying an upgrade).
+     */
     public void UpdateMenu(){
-        // Update the upgrade buttons
-        
         upgradeButton1.setText(!(upgrade1 == Upgrades.projectiledamage || upgrade1 == Upgrades.projectilespeed) ?
         "Upgrade:\n" + upgrade1.label + " + " + upgrade1amount + "\nCost:\n" + upgrade1cost + " XP" : 
         "Upgrade:\n" + upgrade1.label + " + " + upgrade1amount * 100 + "%\nCost:\n" + upgrade1cost + " XP");
@@ -278,6 +294,11 @@ public class HUD extends GameObject {
         upgradeButton2.setPosition(Gdx.graphics.getWidth()/2 + 35, Gdx.graphics.getHeight()/2 + upgradeMenuBackground.getHeight()/2 - upgradeButton2.getHeight() - 15);
     }
 
+    /**
+     * Purchases an upgrade.
+     *
+     * @param upgrade the identifier of the upgrade which was purchased.
+     */
     void BuyUpgrade(int upgrade){
         switch(upgrade){
             case 1:
@@ -289,6 +310,9 @@ public class HUD extends GameObject {
         }
     }
 
+    /**
+     * Generates random upgrades.
+     */
     void RandomiseUpgrades(){
         Random r = new Random();
         switch(r.nextInt(6)){

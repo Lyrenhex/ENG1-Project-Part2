@@ -11,151 +11,249 @@ import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameGenerics.Upgrades;
 import com.lyrenhex.GameScreens.GameController;
+import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.Projectiles.Projectile;
+import com.lyrenhex.Projectiles.ProjectileData;
 
+/**
+ * The boat under player control - in practice, this class represents the player.
+ */
 public class PlayerBoat extends Boat{
-	float projectileDamageMultiplier = 1;
-	float projectileSpeedMultiplier = 1;
+    float projectileDamageMultiplier = 1;
+    float projectileSpeedMultiplier = 1;
 
-	// The higher the defense, the stronger the player, this is subtracted from the damage
-	int defense = 1;
+    // The higher the defense, the stronger the player, this is subtracted from the damage
+    int defense = 10;
 
-	float timeSinceLastHeal = 0;
+    float timeSinceLastHeal = 0;
+
+    boolean hasExtraCannons = false;
+    boolean isImmune = false;
+    float timeImmune = 0.0f;
+    final float maxTimeImmune = 5.0f;
+
+    public ProjectileData projectileType;
 
     public PlayerBoat(GameController controller, Vector2 initialPosition, Vector2 mapSize) {
+        this.projectileType = controller.projectileHolder.stock;
+
         this.controller = controller;
 
-		this.HP = 100;
-		this.maxHP = 100;
-		this.speed = 200;
-		this.turnSpeed = 150;
-		position = initialPosition;
+        this.HP = 100;
+        this.maxHP = 100;
+        this.speed = 200;
+        this.turnSpeed = 150;
+        position = initialPosition;
 
-		collisionPolygon.setPosition(initialPosition.x + GetCenterX()/2, initialPosition.y - GetCenterY()/2 - 10);
-		collisionPolygon.setOrigin(25,50);
-		collisionPolygon.setRotation(rotation - 90);
+        collisionPolygon.setPosition(initialPosition.x + GetCenterX()/2, initialPosition.y - GetCenterY()/2 - 10);
+        collisionPolygon.setOrigin(25,50);
+        collisionPolygon.setRotation(rotation - 90);
 
-		sprite.setPosition(initialPosition.x, initialPosition.y);
+        sprite.setPosition(initialPosition.x, initialPosition.y);
 
-		this.mapSize = mapSize;
-		mapBounds = new Array<Vector2>(true, 4);
-		mapBounds.add(new Vector2(0,0));
-		mapBounds.add(new Vector2(mapSize.x, 0));
-		mapBounds.add(new Vector2(mapSize.x, mapSize.y));
-		mapBounds.add(new Vector2(0, mapSize.y));
-	}
-	
-	@Override
-	public void Update(float delta) {
-		timeSinceLastShot += delta;
+        this.mapSize = mapSize;
+        mapBounds = new Array<Vector2>(true, 4);
+        mapBounds.add(new Vector2(0,0));
+        mapBounds.add(new Vector2(mapSize.x, 0));
+        mapBounds.add(new Vector2(mapSize.x, mapSize.y));
+        mapBounds.add(new Vector2(0, mapSize.y));
+    }
+    
+    @Override
+    public void Update(float delta) {
+        timeSinceLastShot += delta;
 
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-			Move(delta, 1);
-		}
-        if(Gdx.input.isKeyPressed(Input.Keys.S)){
-			Move(delta, -1);
-		}
-        if(Gdx.input.isKeyPressed(Input.Keys.D)){
-			Turn(delta, -1);
-		}
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-			Turn(delta, 1);
-		}
-
-        if(((Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !controller.hud.hoveringOverButton) // make sure we don't fire when hovering over a button and clicking
-		|| Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) // doesn't matter if we're over a button or not when pressing space
-		&& shotDelay <= timeSinceLastShot){
-            Shoot();
-			timeSinceLastShot = 0;
+        if (isImmune) timeImmune += delta;
+        if (timeImmune > maxTimeImmune) {
+            isImmune = false;
+            timeImmune = 0.0f;
         }
 
-		if(HP <= 0)
-		{
-			//the player is dead
-			controller.gameOver();
-		}
+        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            Move(delta, 1);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.S)){
+            Move(delta, -1);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            Turn(delta, -1);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            Turn(delta, 1);
+        }
 
-	}
-	
-	/*
-		Method that executes when a collision is detected
+        if(((Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !controller.hud.hoveringOverButton) // make sure we don't fire when hovering over a button and clicking
+        || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) // doesn't matter if we're over a button or not when pressing space
+        && shotDelay <= timeSinceLastShot){
+            Shoot();
+            timeSinceLastShot = 0;
+        }
 
-		@param	other	the other object, as a PhysicsObject to be generic
-	*/
-	@Override
-	public void OnCollision(PhysicsObject other) {
-		if(other instanceof Projectile){ //check the type of object passed
-			Projectile p = (Projectile) other;
-			if(! p.isPlayerProjectile)
-			{
-				p.killOnNextTick = true;
-				HP -= (p.damage - defense);
-			}
-		}
-		else if(other.getClass() == EnemyCollege.class || other.getClass() == PlayerCollege.class)
-		{
-			controller.gameOver();
-		}
-		else if (other.getClass() == NeutralBoat.class)
-		{
-			HP -= 50;
-		}
-	}
+        if(HP <= 0)
+        {
+            //the player is dead
+            controller.gameOver();
+        }
 
-	@Override
-	void Shoot(){
-        Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
-        								 rotation, controller.projectileHolder.stock, true,
-										 projectileDamageMultiplier, projectileSpeedMultiplier);
-        controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
-	}
+    }
+    
+    /*
+        Method that executes when a collision is detected
 
-	@Override
-	void Destroy(){
-		controller.gameOver();
-	}
-
-	/*
-		Allows the player to upgrade their boat
-
-		@param	upgrade		The requested upgrade
-		@param	amount		the amount to upgrade by
-	*/
-    public void Upgrade(Upgrades upgrade, float amount){
-    	if(upgrade == Upgrades.health) {
-    		HP = (int) Math.min(maxHP, HP + amount); // Keeps HP from exceeding max
-    	} else if(upgrade == Upgrades.maxhealth) {
-    		maxHP += amount;
-    		HP += amount; // Also heal the player, we're feeling generous.
-    	} else if(upgrade == Upgrades.speed) {
-    		speed += amount;
-    	} else if(upgrade == Upgrades.turnspeed) {
-    		turnSpeed += amount;
-    	} else if(upgrade == Upgrades.projectiledamage) {
-    		projectileDamageMultiplier += amount;
-    	} else if(upgrade == Upgrades.projectilespeed) {
-    		projectileSpeedMultiplier += amount;
-    	} else if(upgrade == Upgrades.defense) {
-    		defense += amount;
-    	}
+        @param    other    the other object, as a PhysicsObject to be generic
+    */
+    @Override
+    public void OnCollision(PhysicsObject other) {
+        if(other instanceof Projectile){ //check the type of object passed
+            Projectile p = (Projectile) other;
+            if(! p.isPlayerProjectile)
+            {
+                p.killOnNextTick = true;
+                if (!isImmune) {
+                    HP -= (p.damage - defense);
+                }
+            }
+        }
+        else if (!isImmune) { // prevent damage or auto-loss whilst immune.
+            if(other.getClass() == EnemyCollege.class || other.getClass() == PlayerCollege.class)
+            {
+                controller.gameOver();
+            }
+            else if (other.getClass() == NeutralBoat.class)
+            {
+                HP -= 50;
+            }
+        }
     }
 
-	@Override
-	public void Draw(SpriteBatch batch) {
-		sprite.draw(batch);
-	}
+    @Override
+    void Shoot(){
+        Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                                         rotation, projectileType, true, this,
+                                         projectileDamageMultiplier, projectileSpeedMultiplier);
+        controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
 
-	public void Heal(int amount, float delta)
-	{
-		timeSinceLastHeal += delta;
-		if(amount * timeSinceLastHeal >= 1)
-		{
-			HP += amount * timeSinceLastHeal;
-			timeSinceLastHeal = 0;
-			if(HP > maxHP)
-			{
-				HP = maxHP;
-			}
-		}
-	}
+        if (hasExtraCannons) {
+            proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                    rotation - 90, projectileType, true, this,
+                    projectileDamageMultiplier, projectileSpeedMultiplier);
+            controller.NewPhysicsObject(proj);
+            proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
+                    rotation + 90, projectileType, true, this,
+                    projectileDamageMultiplier, projectileSpeedMultiplier);
+            controller.NewPhysicsObject(proj);
+        }
+    }
+
+    @Override
+    void Destroy(){
+        controller.gameOver();
+    }
+
+    /**
+     * Allows the player to upgrade their boat
+     *
+     * @param    upgrade        The requested upgrade
+     * @param    amount        the amount to upgrade by
+    */
+    public void Upgrade(Upgrades upgrade, float amount){
+        if(upgrade == Upgrades.health) {
+            HP = (int) Math.min(maxHP, HP + amount); // Keeps HP from exceeding max
+        } else if(upgrade == Upgrades.maxhealth) {
+            maxHP += amount;
+            HP += amount; // Also heal the player, we're feeling generous.
+        } else if(upgrade == Upgrades.speed) {
+            speed += amount;
+        } else if(upgrade == Upgrades.turnspeed) {
+            turnSpeed += amount;
+        } else if(upgrade == Upgrades.projectiledamage) {
+            projectileDamageMultiplier += amount;
+        } else if(upgrade == Upgrades.projectilespeed) {
+            projectileSpeedMultiplier += amount;
+        } else if(upgrade == Upgrades.defense) {
+            defense += amount;
+        }
+    }
+
+    @Override
+    public void Draw(SpriteBatch batch) {
+        sprite.draw(batch);
+    }
+
+    /**
+     * Heals the player by the `amount` specified, multiplied by the time elapsed since the last heal.
+     *
+     * @param amount the base amount to heal the player.
+     * @param delta the time delta since the last frame.
+     */
+    public void Heal(int amount, float delta)
+    {
+        timeSinceLastHeal += delta;
+        if(amount * timeSinceLastHeal >= 1)
+        {
+            HP += amount * timeSinceLastHeal;
+            timeSinceLastHeal = 0;
+            if(HP > maxHP)
+            {
+                HP = maxHP;
+            }
+        }
+    }
+
+    /**
+     * Called when starting a game, sets the difficulty conditions of the game.
+     * Defaults to 'Normal' if not called on game start.
+     *
+     * @param difficulty the difficulty of the game (Easy, Normal, or Hard).
+     */
+    public void setDifficulty(Difficulty difficulty) {
+        switch (difficulty) {
+            case Easy:
+                maxHP *= 2;
+                HP *= 2;
+                projectileDamageMultiplier *= 2;
+                break;
+            case Normal:
+                break;
+            case Hard:
+                defense = 0;
+                projectileDamageMultiplier /= 2;
+        }
+    }
+
+    /**
+     * Resets the immunity timer and makes the player immune.
+     */
+    public void setImmune() {
+        timeImmune = 0.0f;
+        isImmune = true;
+    }
+
+    /**
+     * Returns whether the player is immune or not at the given time.
+     *
+     * @return whether the player is immune at the time.
+     */
+    public boolean isImmune() {
+        return isImmune;
+    }
+
+    /**
+     * Returns the time left on the player's immunity, which will be the maximum
+     * allowed immunity time if the player is not immune when this method is called.
+     *
+     * @return the time left on the player's immunity.
+     */
+    public float remainingTimeImmune() {
+        return maxTimeImmune - timeImmune;
+    }
+
+    /**
+     * Grants the player the 'Extra Cannons' power-up, which adds two bonus projectiles
+     * firing to each side when the player fires a cannonball.
+     */
+    public void addExtraCannons() {
+        hasExtraCannons = true;
+    }
 }
+

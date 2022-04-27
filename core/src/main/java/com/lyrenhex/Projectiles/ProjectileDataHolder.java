@@ -3,18 +3,22 @@ package com.lyrenhex.Projectiles;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Class to hold an instance of each projectile type in the game, avoiding unnecessary ProjectileData objects
+ * when one would suffice.
+ */
 public  class ProjectileDataHolder {
-	// This class will create one instance of each projectile type there is, this will avoid
-	// spamming instances of the same projectile data when one will suffice.
-	
-	public ProjectileData stock;
-	public ProjectileData enemy;
-	public ProjectileData boss;
+    public ProjectileData stock;
+    public ProjectileData enemy;
+    public ProjectileData boss;
+    public ProjectileData duck;
 
-	public ProjectileDataHolder() {
-		stock = new ProjectileData(250, 20, new Vector2(20,20),
-		new Texture("img/cannonball.png"));
-		boss = new ProjectileData(300, 20, new Vector2(20,20),
-		new Texture("img/cannonball.png"));
-	}
+    public ProjectileDataHolder() {
+        stock = new ProjectileData(250, 20, new Vector2(20,20),
+                new Texture("img/cannonball.png"));
+        boss = new ProjectileData(300, 20, new Vector2(20,20),
+                new Texture("img/cannonball.png"));
+        duck = new ProjectileData(250, 30, new Vector2(20, 20),
+                new Texture("img/duck.png"));
+    }
 }

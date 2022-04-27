@@ -8,29 +8,35 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 
 import java.lang.Math;
 
+/**
+ * Class handling projectile logic.
+ */
 public class Projectile extends PhysicsObject {
-    
-    private Vector2 velocity;
-    private float speed; 
-    private Sprite sprite;
+
+    public PhysicsObject owner;
+    private final Vector2 velocity;
+    private final float speed;
+    private final Sprite sprite;
     public boolean isPlayerProjectile;
     public float damage;
 
-    /*
-        @param  origin              where it should start
-        @param  originRot           the rotation of the projectile
-        @param  data        r        the data to use
-        @param  isPlayerProjectile  true if the projectile is shot by the player
+    /**
+     * @param  origin               where it should start
+     * @param  originRot            the rotation of the projectile
+     * @param  data                 the data to use
+     * @param  isPlayerProjectile   true if the projectile is shot by the player
     */
-    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile) {
+    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, PhysicsObject owner) {
         position = origin;
         speed = data.speed;
         this.isPlayerProjectile = isPlayerProjectile;
         damage = data.damage;
+
+        this.owner = owner;
         
         // Calculate the projectile's velocity in the game space
         velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed, 
-        		(float) Math.sin(Math.toRadians(originRot)) * speed);
+                (float) Math.sin(Math.toRadians(originRot)) * speed);
         
         sprite = new Sprite(data.texture);
         sprite.setSize(data.size.x, data.size.y);
@@ -44,16 +50,25 @@ public class Projectile extends PhysicsObject {
         collisionPolygon.setOrigin(data.size.x/2, data.size.y/2);
     }
 
-    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, float damageMultiplier, float speedMultiplier) {
+    /**
+     * @param  origin               where it should start
+     * @param  originRot            the rotation of the projectile
+     * @param  data                 the data to use
+     * @param  isPlayerProjectile   true if the projectile is shot by the player
+     * @param  damageMultiplier     the damage multiplier applied to this projectile.
+     */
+    public Projectile(Vector2 origin, float originRot, ProjectileData data, boolean isPlayerProjectile, PhysicsObject owner, float damageMultiplier, float speedMultiplier) {
         position = origin;
         speed = data.speed * speedMultiplier;
         damage = data.damage * damageMultiplier;
         this.isPlayerProjectile = isPlayerProjectile;
-        
+
+        this.owner = owner;
+
         // Calculate the projectile's velocity in the game space
-        velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed, 
-        		(float) Math.sin(Math.toRadians(originRot)) * speed);
-        
+        velocity = new Vector2((float) Math.cos(Math.toRadians(originRot)) * speed,
+                (float) Math.sin(Math.toRadians(originRot)) * speed);
+
         sprite = new Sprite(data.texture);
         sprite.setSize(data.size.x, data.size.y);
         sprite.setOrigin(data.size.x / 2, data.size.y / 2);

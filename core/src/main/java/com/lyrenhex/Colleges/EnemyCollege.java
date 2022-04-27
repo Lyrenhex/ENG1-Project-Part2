@@ -18,7 +18,10 @@ import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
 
-public class EnemyCollege extends College{
+/**
+ * Enemy colleges which must be defeated by the player to progress the game.
+ */
+public class EnemyCollege extends College {
    
     int damage;
     float shootingInaccuracy = 10f; // in degrees (each side)
@@ -112,6 +115,11 @@ public class EnemyCollege extends College{
             deadSprite.draw(batch);
     }
 
+    /**
+     * Fire a cannonball at the location specified by `target`.
+     *
+     * @param target the position in the game world to fire the cannonball at.
+     */
     void ShootAt(Vector2 target)
     {
         float shotAngle = (float) Math.toDegrees(Math.atan2(target.y - (position.y + aliveSprite.getHeight()/2),
@@ -124,10 +132,13 @@ public class EnemyCollege extends College{
         // then - the shooting inaccuracy to centre the distribution on 0
         gc.NewPhysicsObject(new Projectile(new Vector2(position.x + aliveSprite.getWidth()/2,
                                                        position.y + aliveSprite.getHeight()/2),
-                            shotAngle, projectileType, false));
+                            shotAngle, projectileType, false, this));
         //instantiate a new bullet and pass a reference to the gamecontroller so it can be updated and drawn
     }
 
+    /**
+     * For the boss college, disable its invulnerability.
+     */
     public void becomeVulnerable()
     {
         invulnerable = false;

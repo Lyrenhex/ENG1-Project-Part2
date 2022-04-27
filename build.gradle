@@ -55,6 +55,11 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
 
+    test{
+        workingDir = new File("assets")
+    }
+
+
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -62,9 +67,9 @@ project(":core") {
 
         testImplementation('junit:junit:4.13')
 
-        testRuntimeOnly("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
-        testRuntimeOnly("com.badlogicgames.gdx:gdx:$gdxVersion")
-        testRuntimeOnly("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+        testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+        testImplementation("com.badlogicgames.gdx:gdx:$gdxVersion")
+        testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
     }
 }
 

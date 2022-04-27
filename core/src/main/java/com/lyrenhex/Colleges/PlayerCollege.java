@@ -9,12 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 
+/**
+ * The friendly player college for healing.
+ */
 public class PlayerCollege extends College{
 
     int healAmount;
 
     public PlayerCollege(Vector2 position, Texture aliveTexture, Texture islandTexture) {
-        //TODO set a collision polygon
         healAmount = 15;
         range = 400;
         aliveSprite = new Sprite(aliveTexture);
@@ -30,9 +32,9 @@ public class PlayerCollege extends College{
 
     @Override
     public void OnCollision(PhysicsObject other) {
-        // playercollege doesnt need to handle any collisions itself
-        // the case of the playerboat crashing into it is handled by the 
-        // playerboat
+        // PlayerCollege doesn't need to handle any collisions itself
+        // the case of the PlayerBoat crashing into it is handled by the
+        // PlayerBoat.
     }
 
     @Override
