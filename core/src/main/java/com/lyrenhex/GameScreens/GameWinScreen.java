@@ -25,7 +25,7 @@ public class GameWinScreen implements Screen{
         game = g;
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"));
         winTextLayout = new GlyphLayout();
-        winTextLayout.setText(font, "YOU WIN! Press ENTER to return to the menu");
+        winTextLayout.setText(font, "YOU WIN! Press ESCAPE to return to the menu");
         batch = new SpriteBatch();
     }
 

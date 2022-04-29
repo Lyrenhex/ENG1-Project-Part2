@@ -46,8 +46,8 @@ public class EnemyCollege extends College {
         deadSprite.setPosition(position.x, position.y);
         deadSprite.setSize(100, 100);
         islandSprite = new Sprite(islandTexture);
-        islandSprite.setCenter(aliveSprite.getX()+5, aliveSprite.getY()+5);
-        islandSprite.setSize(120, 120);
+        islandSprite.setCenter(aliveSprite.getX(), aliveSprite.getY());
+        islandSprite.setSize(150, 150);
         this.position = position;
         range = 500;
         gc = controller;
@@ -150,6 +150,7 @@ public class EnemyCollege extends College {
     public void becomeVulnerable()
     {
         invulnerable = false;
+        islandSprite.setTexture(new Texture(Gdx.files.internal("img/island.png")));
         hpText.setText(font, HP + "/" + maxHP);
     }
 
