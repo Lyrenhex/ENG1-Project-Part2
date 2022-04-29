@@ -17,13 +17,14 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
 import com.lyrenhex.Projectiles.ProjectileData;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
+import com.lyrenhex.Saves.EnemyCollegeState;
 
 /**
  * Enemy colleges which must be defeated by the player to progress the game.
  */
 public class EnemyCollege extends College {
    
-    int damage;
     float shootingInaccuracy = 10f; // in degrees (each side)
     float fireRate = 1.5f;
     float timeSinceLastShot = 0;
@@ -33,7 +34,6 @@ public class EnemyCollege extends College {
     BitmapFont font;
     GlyphLayout hpText;
     int maxHP;
-    public int HP;
     public boolean invulnerable;
    
     public EnemyCollege(Vector2 position, Texture aliveTexture, Texture islandTexture,
@@ -58,6 +58,14 @@ public class EnemyCollege extends College {
         HP = maxHP;
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
         hpText = new GlyphLayout();
+        hpText.setText(font, HP + "/" + maxHP);
+    }
+
+    public EnemyCollege(GameController controller, EnemyCollegeState state)
+    {
+        this(state.position, new Texture(Gdx.files.internal(state.aliveTexturePath)), new Texture(Gdx.files.internal(state.islandTexturePath)), controller, ProjectileDataHolder.fromEnum(state.projectileType), state.maxHP);
+        this.invulnerable = state.invulnerable;
+        this.HP = state.HP;
         hpText.setText(font, HP + "/" + maxHP);
     }
 
@@ -145,4 +153,12 @@ public class EnemyCollege extends College {
         hpText.setText(font, HP + "/" + maxHP);
     }
 
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @param numBoats the number of boats remaining under this college's control.
+     * @return an object storing the state information of the object.
+     */
+    public EnemyCollegeState getSaveState(int numBoats) {
+        return new EnemyCollegeState(numBoats, invulnerable, position, aliveSprite.getTexture(), islandSprite.getTexture(), projectileType, maxHP, HP);
+    }
 }

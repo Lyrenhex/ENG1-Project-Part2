@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.google.gson.Gson;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
+
+import java.io.FileWriter;
 
 /**
  * Menu screen for when the game is launched or paused.
@@ -30,7 +33,7 @@ public class Menu implements Screen {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("fonts/bobcat.fnt"), false);
         menuTextLayout = new GlyphLayout(); //layouts can be used to manage text to allow it to be centred
-        menuTextLayout.setText(font, "press ENTER to resume game\npress ESCAPE to quit");
+        menuTextLayout.setText(font, "press ENTER to resume game\npress ESCAPE to save and quit\n(will save to: " + game.savePath + ")");
         if (!game.gameStarted) {
             menuTextLayout.setText(font, "press ENTER to start on normal difficulty\npress E to start on easy difficulty\npress H to start on hard difficulty\npress ESCAPE to quit");
         }
@@ -47,6 +50,18 @@ public class Menu implements Screen {
         }
         else if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
         {
+            if (game.gameStarted) {
+                // Save the game state.
+                try {
+                    FileWriter writer = new FileWriter(game.savePath);
+                    writer.write(game.gameState);
+                    writer.flush();
+                    writer.close();
+                    System.out.println("Save written ==> " + game.savePath);
+                } catch (Exception exp) {
+                    System.out.println("Exception saving state: " + exp);
+                }
+            }
             Gdx.app.exit();
         }
         else if (!game.gameStarted) {

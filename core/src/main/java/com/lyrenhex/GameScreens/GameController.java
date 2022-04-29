@@ -1,7 +1,6 @@
 package com.lyrenhex.GameScreens;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +12,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lyrenhex.Boats.*;
 import com.lyrenhex.Colleges.College;
 import com.lyrenhex.Colleges.EnemyCollege;
@@ -22,7 +25,12 @@ import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GeneralControl.Difficulty;
 import com.lyrenhex.GeneralControl.eng1game;
 import com.lyrenhex.Level.GameMap;
+import com.lyrenhex.Obstacles.ChoppyWaves;
+import com.lyrenhex.Obstacles.LongBoi;
+import com.lyrenhex.Obstacles.Obstacle;
+import com.lyrenhex.Obstacles.Storm;
 import com.lyrenhex.Projectiles.ProjectileDataHolder;
+import com.lyrenhex.Saves.*;
 import com.lyrenhex.UI.HUD;
 
 /**
@@ -57,7 +65,6 @@ public class GameController implements Screen {
 
     // projectile variables
     public ProjectileDataHolder projectileHolder;
-    public ProjectileDataHolder projectileDataHolder;
 
 
     public GameController(eng1game game){ //passes the game class so that we can change scene back later
@@ -70,6 +77,11 @@ public class GameController implements Screen {
         mapSize = new Vector2(3000, 3000);
 
         batch = new SpriteBatch();
+        Random rd = new Random();
+
+        // Spawn the Choppy Waves somewhere; collisions do not matter for weather effects.
+        ChoppyWaves c = new ChoppyWaves(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
+        physicsObjects.add(c);
 
         // Create the player boat and place it in the centre of the screen
         playerBoat = new PlayerBoat(this, new Vector2(200,200), mapSize.cpy());
@@ -78,7 +90,6 @@ public class GameController implements Screen {
         // this section creates a array of textures for the colleges, shuffles it and assigns to
         // the created colleges
         Texture[] collegeTextures = new Texture[10];
-        Random rd = new Random();
         for(int i=0; i < 9; i++)
         {
             collegeTextures[i] = new Texture("img/castle" + (i+1) + ".png");
@@ -103,7 +114,7 @@ public class GameController implements Screen {
         EnemyCollege e;
         for (int i = 0; i < 3; i++) {
             do {
-                e = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[i+1], islandTexture, this, projectileHolder.stock, 200);
+                e = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[i+1], islandTexture, this, ProjectileDataHolder.stock, 200);
                 isCollision = false;
                 for (PhysicsObject current : physicsObjects) {
                     if (e.CheckCollisionWith(current)) {
@@ -134,7 +145,7 @@ public class GameController implements Screen {
 
         do {
             bossCollege = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[4], islandTexture,
-                    this, projectileHolder.boss, 200);
+                    this, ProjectileDataHolder.boss, 200);
             isCollision = false;
             for (PhysicsObject current : physicsObjects) {
                 if (bossCollege.CheckCollisionWith(current)) {
@@ -151,7 +162,7 @@ public class GameController implements Screen {
         // Spawn Long Boi somewhere...
         LongBoi l;
         do {
-            l = new LongBoi(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize);
+            l = new LongBoi(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
             isCollision = false;
             for (PhysicsObject current : physicsObjects) {
                 if (l.CheckCollisionWith(current)) {
@@ -176,9 +187,130 @@ public class GameController implements Screen {
         } while (isCollision);
         physicsObjects.add(b);
 
+        // spawn some rocks
+        for (int i = 0; i < 7; i++) {
+            Obstacle o;
+            do {
+                o = new Obstacle(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), new Texture(Gdx.files.internal("img/rocks.png")));
+                isCollision = false;
+                for (PhysicsObject current : physicsObjects) {
+                    if (o.CheckCollisionWith(current)) {
+                        isCollision = true;
+                        break;
+                    }
+                }
+            } while (isCollision);
+
+            physicsObjects.add(o);
+        }
+
+        // spawn some shipwrecks
+        for (int i = 0; i < 3; i++) {
+            Obstacle o;
+            do {
+                o = new Obstacle(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), new Texture(Gdx.files.internal("img/shipWreck.png")));
+                isCollision = false;
+                for (PhysicsObject current : physicsObjects) {
+                    if (o.CheckCollisionWith(current)) {
+                        isCollision = true;
+                        break;
+                    }
+                }
+            } while (isCollision);
+
+            physicsObjects.add(o);
+        }
+
+        // Spawn the Storm somewhere; collisions do not matter for weather effects.
+        Storm s = new Storm(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
+        physicsObjects.add(s);
+
         //create the moving camera/map borders
         map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
-                (PlayerBoat) playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+                playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
+    }
+
+    public GameController(eng1game game, String saveData) {
+        this.game = game;
+        gameObjects = new ArrayList<GameObject>();
+        physicsObjects = new ArrayList<PhysicsObject>();
+        colleges = new ArrayList<College>();
+        projectileHolder = new ProjectileDataHolder();
+        hud = new HUD(this);
+        mapSize = new Vector2(3000, 3000);
+
+        batch = new SpriteBatch();
+        Random rd = new Random();
+
+        Gson gson = new Gson();
+        SaveState state = gson.fromJson(saveData, SaveState.class);
+        timer = state.timer;
+        xp = state.xp;
+        plunder = state.plunder;
+
+        if (state.getChoppyWaves() != null) {
+            ChoppyWaves c = new ChoppyWaves(state.getChoppyWaves().position);
+            physicsObjects.add(c);
+        }
+
+        playerBoat = new PlayerBoat(this, state.getPlayer(), mapSize.cpy());
+        physicsObjects.add(playerBoat);
+
+        PlayerCollege p = new PlayerCollege(state.getPlayerCollege());
+        physicsObjects.add(p); //add college to physics object, for updates
+        colleges.add(p); //also add a reference to the colleges list
+
+        boolean isCollision;
+        EnemyCollege e;
+        for (EnemyCollegeState es : state.getEnemyColleges()) {
+            e = new EnemyCollege(this, es);
+
+            if (es.projectileType == ProjectileDataHolder.Option.Boss) bossCollege = e;
+
+            physicsObjects.add(e);
+            colleges.add(e);
+
+            CollegeBoat b;
+            for (int j = 0; j < es.numBoats; j++) {
+                do {
+                    b = new CollegeBoat(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), mapSize, e);
+                    isCollision = false;
+                    for (PhysicsObject current : physicsObjects) {
+                        if (b.CheckCollisionWith(current)) {
+                            isCollision = true;
+                            break;
+                        }
+                    }
+                } while (isCollision);
+                physicsObjects.add(b);
+            }
+        }
+
+        if (state.getLongBoi() != null) {
+            LongBoi l = new LongBoi(this, state.getLongBoi());
+            physicsObjects.add(l);
+        }
+
+        if (state.getBlessing() != null) {
+            Blessing b = new Blessing(this, state.getBlessing().position, mapSize);
+            physicsObjects.add(b);
+        }
+
+        Obstacle o;
+        for (ObstacleState os : state.getObstacles()) {
+            o = new Obstacle(this, os.position, new Texture(Gdx.files.internal(os.texturePath)));
+            physicsObjects.add(o);
+        }
+
+        if (state.getStorm() != null) {
+            // Spawn the Storm somewhere; collisions do not matter for weather effects.
+            Storm s = new Storm(this, state.getStorm().position);
+            physicsObjects.add(s);
+        }
+
+        //create the moving camera/map borders
+        map = new GameMap(Gdx.graphics.getHeight(), Gdx.graphics.getWidth(),
+                playerBoat, batch, (int) mapSize.x, (int) mapSize.y);
     }
 
     /**
@@ -253,6 +385,46 @@ public class GameController implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            // collect all of the states to save together from the physics objects list.
+            PlayerCollegeState playerCollege = null;
+            ArrayList<EnemyCollegeState> enemyColleges = new ArrayList<>();
+            BlessingState blessing = null;
+            ChoppyWavesState choppyWaves = null;
+            LongBoiState longBoi = null;
+            ArrayList<ObstacleState> obstacles = new ArrayList<>();
+            StormState storm = null;
+
+            // TODO: if we have time, refactoring such that these Objects inherit
+            // from some `SavableObject` (itself inheriting from PhysicsObject)
+            // to simplify the loop would be ideal.
+            for (PhysicsObject object : physicsObjects) {
+                if (object instanceof PlayerCollege) {
+                    playerCollege = ((PlayerCollege) object).getSaveState();
+                } else if (object instanceof EnemyCollege) {
+                    EnemyCollege college = (EnemyCollege) object;
+                    int numBoats = 0;
+                    for (PhysicsObject current : physicsObjects) {
+                        if (current instanceof CollegeBoat) {
+                            if (((CollegeBoat) current).college == college) {
+                                numBoats++;
+                            }
+                        }
+                    }
+                    enemyColleges.add(college.getSaveState(numBoats));
+                } else if (object instanceof Blessing) {
+                    blessing = ((Blessing) object).getSaveState();
+                } else if (object instanceof ChoppyWaves) {
+                    choppyWaves = ((ChoppyWaves) object).getSaveState();
+                } else if (object instanceof LongBoi) {
+                    longBoi = ((LongBoi) object).getSaveState();
+                } else if (object instanceof Obstacle) {
+                    obstacles.add(((Obstacle) object).getSaveState());
+                } else if (object instanceof Storm) {
+                    storm = ((Storm) object).getSaveState();
+                }
+            }
+            SaveState state = new SaveState(timer, xp, plunder, playerBoat.getSaveState(), playerCollege, enemyColleges, blessing, choppyWaves, longBoi, obstacles, storm);
+            game.gameState = state.serialise();
             this.game.gotoScreen(Screens.menuScreen);
         }
     }
@@ -266,7 +438,7 @@ public class GameController implements Screen {
         for(int i=0; i < physicsObjects.size(); i++)
         {
             PhysicsObject current = physicsObjects.get(i);
-            if(current instanceof EnemyCollege || current instanceof PlayerCollege)
+            if(current instanceof College)
             { //colleges need a slightly different update method signature, so use that specifically for them
                 current.Update(delta, playerBoat);
             }

@@ -32,7 +32,7 @@ public abstract class Boat extends PhysicsObject {
     protected Vector2 mapSize;
     
     public Boat() {
-        sprite = new Sprite(new Texture(Gdx.files.internal("img/boat1.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("img/boosterOff.png")));
         sprite.setSize(100, 50);
         sprite.setOrigin(50, 25);
         sprite.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
