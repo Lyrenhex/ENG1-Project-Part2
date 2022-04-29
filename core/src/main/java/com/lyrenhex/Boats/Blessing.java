@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
+import com.lyrenhex.Saves.BlessingState;
 
 /**
  * Class for the Blessing power-up encountered on the map, which grants Charlie Jeffery's blessing on pickup (collision).
@@ -23,7 +24,7 @@ public class Blessing extends Boat {
 
         this.position = position;
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("img/lightray.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("img/CharlieJeffery.png")));
         sprite.setSize(100, 100);
         sprite.setOrigin(50, 50);
 
@@ -57,5 +58,13 @@ public class Blessing extends Boat {
             controller.playerBoat.setImmune();
             Destroy();
         }
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public BlessingState getSaveState() {
+        return new BlessingState(position);
     }
 }

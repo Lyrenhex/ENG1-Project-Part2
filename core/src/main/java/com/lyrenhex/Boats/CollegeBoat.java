@@ -11,6 +11,7 @@ import com.lyrenhex.Colleges.PlayerCollege;
 import com.lyrenhex.GameGenerics.PhysicsObject;
 import com.lyrenhex.GameScreens.GameController;
 import com.lyrenhex.Projectiles.Projectile;
+import com.lyrenhex.Projectiles.ProjectileDataHolder;
 
 import java.util.Iterator;
 
@@ -97,7 +98,7 @@ public class CollegeBoat extends AIBoat {
 
     public void Shoot(){
         Projectile proj = new Projectile(new Vector2(GetCenterX() + position.x, GetCenterY() + position.y),
-                rotation, controller.projectileHolder.stock, false, this);
+                rotation, ProjectileDataHolder.stock, false, this);
         controller.NewPhysicsObject(proj); // Add the projectile to the GameController's physics objects list so it receives updates
 
     }

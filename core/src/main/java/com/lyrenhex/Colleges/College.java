@@ -11,11 +11,9 @@ import java.lang.Math;
  * Abstract class to implement common functions between enemy colleges and the player's college.
  */
 public abstract class College extends PhysicsObject {
-    int range;
-    int HP;
-    int damage;
-    int fireRate;
-    Sprite aliveSprite;
+    protected int range;
+    public int HP;
+    protected Sprite aliveSprite;
     Sprite deadSprite;
     Sprite islandSprite;
 

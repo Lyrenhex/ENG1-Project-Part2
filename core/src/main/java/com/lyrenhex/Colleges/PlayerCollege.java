@@ -1,5 +1,6 @@
 package com.lyrenhex.Colleges;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.lyrenhex.Boats.PlayerBoat;
 import com.lyrenhex.GameGenerics.PhysicsObject;
+import com.lyrenhex.Saves.PlayerCollegeState;
 
 /**
  * The friendly player college for healing.
@@ -28,6 +30,10 @@ public class PlayerCollege extends College{
         this.position = position;
         collisionPolygon = new Polygon(new float[]{0,0,100,0,100,100,0,100});
         collisionPolygon.setPosition(position.x, position.y);
+    }
+
+    public PlayerCollege(PlayerCollegeState state) {
+        this(state.position, new Texture(Gdx.files.internal(state.aliveTexturePath)), new Texture(Gdx.files.internal(state.islandTexturePath)));
     }
 
     @Override
@@ -52,6 +58,14 @@ public class PlayerCollege extends College{
     {
         islandSprite.draw(batch);
         aliveSprite.draw(batch);    
+    }
+
+    /**
+     * Obtains a serialisable form of the current state of the object.
+     * @return an object storing the state information of the object.
+     */
+    public PlayerCollegeState getSaveState() {
+        return new PlayerCollegeState(position, aliveSprite.getTexture(), islandSprite.getTexture());
     }
 
 }
