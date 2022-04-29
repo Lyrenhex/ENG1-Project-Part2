@@ -187,7 +187,22 @@ public class GameController implements Screen {
         } while (isCollision);
         physicsObjects.add(b);
 
-        // TODO: spawn rocks (requires graphics...)
+        // spawn some rocks
+        for (int i = 0; i < 7; i++) {
+            Obstacle o;
+            do {
+                o = new Obstacle(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), new Texture(Gdx.files.internal("img/rocks.png")));
+                isCollision = false;
+                for (PhysicsObject current : physicsObjects) {
+                    if (o.CheckCollisionWith(current)) {
+                        isCollision = true;
+                        break;
+                    }
+                }
+            } while (isCollision);
+
+            physicsObjects.add(o);
+        }
 
         // spawn some shipwrecks
         for (int i = 0; i < 3; i++) {
