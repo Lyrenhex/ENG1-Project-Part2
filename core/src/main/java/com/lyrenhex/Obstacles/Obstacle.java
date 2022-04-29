@@ -18,11 +18,12 @@ public class Obstacle extends PhysicsObject {
     public Obstacle(GameController controller, Vector2 position, Texture texture) {
         this.controller = controller;
 
-        this.position = position.cpy();
+        this.position = position;
 
         sprite = new Sprite(texture);
         sprite.setSize(100, 100);
         sprite.setOrigin(50, 50);
+        sprite.setPosition(position.x, position.y);
 
         collisionPolygon = new Polygon(new float[]{0,0,100,0,100,100,0,100});
         collisionPolygon.setPosition(position.x + GetCenterX()/2, position.y - GetCenterY()/2 - 10);

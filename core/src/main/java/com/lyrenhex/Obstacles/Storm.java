@@ -16,7 +16,7 @@ public class Storm extends Weather {
 
     public Storm(GameController controller, Vector2 position) {
         // TODO: Storm graphics
-        super(controller, position, new Vector2(500, 500), new Texture(Gdx.files.internal("img/lightray.jpg")));
+        super(controller, position, new Vector2(500, 500), new Texture(Gdx.files.internal("img/storm.png")));
     }
 
     @Override

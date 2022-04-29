@@ -187,7 +187,24 @@ public class GameController implements Screen {
         } while (isCollision);
         physicsObjects.add(b);
 
-        // TODO: spawn rocks + shipwrecks (requires graphics...)
+        // TODO: spawn rocks (requires graphics...)
+
+        // spawn some shipwrecks
+        for (int i = 0; i < 3; i++) {
+            Obstacle o;
+            do {
+                o = new Obstacle(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), new Texture(Gdx.files.internal("img/shipWreck.png")));
+                isCollision = false;
+                for (PhysicsObject current : physicsObjects) {
+                    if (o.CheckCollisionWith(current)) {
+                        isCollision = true;
+                        break;
+                    }
+                }
+            } while (isCollision);
+
+            physicsObjects.add(o);
+        }
 
         // Spawn the Storm somewhere; collisions do not matter for weather effects.
         Storm s = new Storm(this, new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)));
