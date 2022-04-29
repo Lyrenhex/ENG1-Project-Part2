@@ -57,6 +57,7 @@ public class HUD extends GameObject {
     TextButtonStyle buyCannonsButtonStyle;
 
     Image upgradeMenuBackground;
+    Image shopMenuBackground;
 
     GlyphLayout xpTextLayout;
     GlyphLayout plunderTextLayout;
@@ -67,6 +68,8 @@ public class HUD extends GameObject {
     public boolean hoveringOverButton = false; // Disable certain player behaviours when hovering over a button
     boolean upgradeMenuOpen = false;
     boolean upgradeMenuInitialised = false; // Set to true once initialised
+    boolean shopMenuOpen = false;
+    boolean shopMenuInitialised;
 
     Upgrades upgrade1;
     int upgrade1cost;
@@ -74,6 +77,9 @@ public class HUD extends GameObject {
     Upgrades upgrade2;
     int upgrade2cost;
     float upgrade2amount;
+    int healthCost;
+    int boosterCost;
+    int cannonsCost;
 
     public HUD(GameController gameController)
     {
@@ -173,14 +179,14 @@ public class HUD extends GameObject {
         shopButtonStyle.font = font;
         shopButtonStyle.fontColor = Color.BLACK;
         shopButtonStyle.up = new TextureRegionDrawable(new Texture("ui/button.png"));
-        shopButton = new TextButton("Shop", menuButtonStyle);
+        shopButton = new TextButton("Shop", shopButtonStyle);
 
         shopButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // do some actions
-                upgradeMenuOpen = !upgradeMenuOpen;
-                ToggleMenu();
+                shopMenuOpen = !shopMenuOpen;
+                ToggleShop();
             }
 
             // Giving them enter and exit functions so that the player can't fire with left click while hovering over a button.
@@ -211,7 +217,12 @@ public class HUD extends GameObject {
      */
     public void ToggleMenu(){
         // Put the XP menu drawing calls in its own function so that render doesn't get too cluttered
-        
+        // Closes shop menu when upgrades menu is open
+        if(upgradeMenuOpen && shopMenuOpen){
+            shopMenuOpen = false;
+            ToggleShop();
+        }
+
         // Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
         if(!upgradeMenuInitialised) InitialiseMenu();
         
@@ -228,6 +239,48 @@ public class HUD extends GameObject {
         }
     }
 
+    public void ToggleShop(){
+        // Put the shop menu drawing calls in its own function so that render doesn't get too cluttered
+
+        // Close the upgrade menu when the shop menu is opened
+        if(shopMenuOpen && upgradeMenuOpen){
+            upgradeMenuOpen = false;
+            ToggleMenu();
+        }
+
+        // Initialise the menu if it hasn't been, this avoids repeatedly creating new buttons.
+        if(!shopMenuInitialised) InitialiseShop();
+
+        // Add/re-add the UI elements back to the stage
+        if(shopMenuOpen){
+
+            buyCannonsButton.setText("Item:\n" + "Extra Cannons"  + "\nCost:\n" + cannonsCost + " plunder");
+            buyCannonsButton.setScale(1f, 1f);
+            buyCannonsButton.setPosition(((Gdx.graphics.getWidth()/2 - shopMenuBackground.getWidth()/2 + 15)+(Gdx.graphics.getWidth()/2 + 35))/2, Gdx.graphics.getHeight()/2  - buyCannonsButton.getHeight() - 15);
+            buyCannonsButton.setSize(350, 200);
+
+            buyBoosterButton.setText("Item:\n" + "Rocket Booster"  + "\nCost:\n" + boosterCost + " plunder");
+            buyBoosterButton.setScale(1f, 1f);
+            buyBoosterButton.setPosition(Gdx.graphics.getWidth()/2 + 35, Gdx.graphics.getHeight()/2 + shopMenuBackground.getHeight()/2 - buyBoosterButton.getHeight() - 15);
+            buyBoosterButton.setSize(350,200);
+
+            buyHealButton.setText("Item:\n" + "Ship Repairs"  + "\nCost:\n" + healthCost + " plunder");
+            buyHealButton.setScale(1f, 1f);
+            buyHealButton.setPosition(Gdx.graphics.getWidth()/2 - shopMenuBackground.getWidth()/2 + 15, Gdx.graphics.getHeight()/2 + shopMenuBackground.getHeight()/2 - buyHealButton.getHeight() - 15);
+            buyHealButton.setSize(350, 200);
+
+            stage.addActor(shopMenuBackground);
+            stage.addActor(buyBoosterButton);
+            stage.addActor(buyHealButton);
+            stage.addActor(buyCannonsButton);
+        } else{ // Remove all menu elements from the stage
+            shopMenuBackground.remove();
+            buyCannonsButton.remove();
+            buyBoosterButton.remove();
+            buyHealButton.remove();
+        }
+    }
+
     /**
      * This function creates the menu for the first time, and also generates the first set of upgrades.
      */
@@ -235,7 +288,6 @@ public class HUD extends GameObject {
         // Create the background
         upgradeMenuBackground = new Image(new Texture("ui/background.png"));
         upgradeMenuBackground.setPosition(Gdx.graphics.getWidth()/2 - upgradeMenuBackground.getWidth()/2, Gdx.graphics.getHeight()/2 - upgradeMenuBackground.getHeight()/2);
-
         upgradeMenuBackground.addListener(new ClickListener() {
 
             @Override
@@ -329,6 +381,158 @@ public class HUD extends GameObject {
         stage.addActor(upgradeButton2);
     }
 
+
+    public void InitialiseShop(){
+        // Create the background
+        shopMenuBackground = new Image(new Texture("ui/background.png"));
+        shopMenuBackground.setPosition(Gdx.graphics.getWidth()/2 - shopMenuBackground.getWidth()/2, Gdx.graphics.getHeight()/2 - shopMenuBackground.getHeight()/2);
+        shopMenuBackground.addListener(new ClickListener() {
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = true;
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = false;
+                }
+            }
+        });
+
+        // Create the item purchase buttons
+        buyHealButtonStyle = new TextButtonStyle();
+        buyHealButtonStyle.font = font;
+        buyHealButtonStyle.fontColor = Color.BLACK;
+        buyHealButtonStyle.up = new TextureRegionDrawable(new Texture("ui/upgradebutton.png"));
+
+        buyBoosterButtonStyle = new TextButtonStyle();
+        buyBoosterButtonStyle.font = font;
+        buyBoosterButtonStyle.fontColor = Color.BLACK;
+        buyBoosterButtonStyle.up = new TextureRegionDrawable(new Texture("ui/upgradebutton.png"));
+
+        buyCannonsButtonStyle = new TextButtonStyle();
+        buyCannonsButtonStyle.font = font;
+        buyCannonsButtonStyle.fontColor = Color.BLACK;
+        buyCannonsButtonStyle.up = new TextureRegionDrawable(new Texture("ui/upgradebutton.png"));
+
+        buyHealButton = new TextButton("", buyHealButtonStyle);
+        buyBoosterButton = new TextButton("", buyBoosterButtonStyle);
+        buyCannonsButton = new TextButton("", buyCannonsButtonStyle);
+
+        healthCost = 50;
+        boosterCost = 150;
+        cannonsCost = 150;
+
+        buyHealButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(gc.plunder >= healthCost){
+                    gc.plunder -= healthCost;
+                    BuyUpgrade(3);
+                }
+                return true;
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = true;
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = false;
+                }
+            }
+        });
+
+        buyBoosterButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // do some actions
+                if(gc.plunder >= boosterCost){
+                    gc.plunder -= boosterCost;
+                    BuyUpgrade(4);
+                }
+                return true;
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = true;
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = false;
+                }
+            }
+        });
+
+
+        buyCannonsButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // do some actions
+                if(gc.plunder >= cannonsCost){
+                    gc.plunder -= cannonsCost;
+                    BuyUpgrade(5);
+                }
+                return true;
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = true;
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                if(pointer == -1){
+                    hoveringOverButton = false;
+                }
+            }
+        });
+
+        shopMenuInitialised = true;
+
+        buyCannonsButton.setText("Item:\n" + "Extra Cannons"  + "\nCost:\n" + cannonsCost + " plunder");
+        buyCannonsButton.setScale(1f, 1f);
+        buyCannonsButton.setPosition(((Gdx.graphics.getWidth()/2 - shopMenuBackground.getWidth()/2 + 15)+(Gdx.graphics.getWidth()/2 + 35))/2, Gdx.graphics.getHeight()/2  - buyCannonsButton.getHeight() - 15);
+        buyCannonsButton.setSize(350, 200);
+
+        buyBoosterButton.setText("Item:\n" + "Rocket Booster"  + "\nCost:\n" + boosterCost + " plunder");
+        buyBoosterButton.setScale(1f, 1f);
+        buyBoosterButton.setPosition(Gdx.graphics.getWidth()/2 + 35, Gdx.graphics.getHeight()/2 + shopMenuBackground.getHeight()/2 - buyBoosterButton.getHeight() - 15);
+        buyBoosterButton.setSize(350,200); 
+
+        buyHealButton.setText("Item:\n" + "Ship Repairs"  + "\nCost:\n" + healthCost + " plunder");
+        buyHealButton.setScale(1f, 1f);
+        buyHealButton.setPosition(Gdx.graphics.getWidth()/2 - shopMenuBackground.getWidth()/2 + 15, Gdx.graphics.getHeight()/2 + shopMenuBackground.getHeight()/2 - buyHealButton.getHeight() - 15);
+        buyHealButton.setSize(350, 200);
+
+
+        stage.addActor(shopMenuBackground);
+        stage.addActor(buyCannonsButton);
+        stage.addActor(buyHealButton);
+        stage.addActor(buyBoosterButton);
+    }
+
+
+
+
+
     /**
      * Updates the upgrade buttons (eg, after buying an upgrade).
      */
@@ -363,6 +567,12 @@ public class HUD extends GameObject {
             case 2:
                 gc.playerBoat.Upgrade(upgrade2, upgrade2amount);
                 break;
+            case 3:
+                gc.playerBoat.Upgrade(Upgrades.health, 100);
+            case 4:
+                gc.playerBoat.enableBooster();
+            case 5:
+                gc.playerBoat.addExtraCannons();
         }
     }
 
