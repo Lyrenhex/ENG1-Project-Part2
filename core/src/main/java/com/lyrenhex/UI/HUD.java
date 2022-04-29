@@ -569,10 +569,15 @@ public class HUD extends GameObject {
                 break;
             case 3:
                 gc.playerBoat.Upgrade(Upgrades.health, 100);
+                break;
             case 4:
                 gc.playerBoat.enableBooster();
+                break;
             case 5:
                 gc.playerBoat.addExtraCannons();
+                break;
+            default:
+                break;
         }
     }
 
