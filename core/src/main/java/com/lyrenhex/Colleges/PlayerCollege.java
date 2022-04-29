@@ -26,7 +26,7 @@ public class PlayerCollege extends College{
         aliveSprite.setSize(100,100);
         islandSprite = new Sprite(islandTexture);
         islandSprite.setCenter(aliveSprite.getX()+5, aliveSprite.getY()+5);
-        islandSprite.setSize(120, 120);
+        islandSprite.setSize(150, 150);
         this.position = position;
         collisionPolygon = new Polygon(new float[]{0,0,100,0,100,100,0,100});
         collisionPolygon.setPosition(position.x, position.y);
