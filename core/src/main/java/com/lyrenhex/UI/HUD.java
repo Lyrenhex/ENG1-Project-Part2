@@ -515,7 +515,7 @@ public class HUD extends GameObject {
         buyBoosterButton.setText("Item:\n" + "Rocket Booster"  + "\nCost:\n" + boosterCost + " plunder");
         buyBoosterButton.setScale(1f, 1f);
         buyBoosterButton.setPosition(Gdx.graphics.getWidth()/2 + 35, Gdx.graphics.getHeight()/2 + shopMenuBackground.getHeight()/2 - buyBoosterButton.getHeight() - 15);
-        buyBoosterButton.setSize(350,200); 
+        buyBoosterButton.setSize(350,200);
 
         buyHealButton.setText("Item:\n" + "Ship Repairs"  + "\nCost:\n" + healthCost + " plunder");
         buyHealButton.setScale(1f, 1f);
