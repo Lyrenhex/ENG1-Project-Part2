@@ -41,3 +41,9 @@ Began continous integration and continued to progress on all other parts except 
 More progress was made on all parts of the project and are almost complete.
 
 ![gantt chart for 2022-04-22](/img/week7.png)
+
+### 2022-04-29 
+
+Implementation is complete and major progress was made on testing.
+
+![gantt chart for 2022-04-29](/img/week8.png)
