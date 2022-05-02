@@ -169,7 +169,7 @@ public class PlayerBoat extends Boat{
             {
                 controller.gameOver();
             }
-            else if (other instanceof Boat || other instanceof Obstacle)
+            else if ((other instanceof Boat && !(other instanceof Blessing)) || other instanceof Obstacle)
             {
                 HP -= 50;
             }
