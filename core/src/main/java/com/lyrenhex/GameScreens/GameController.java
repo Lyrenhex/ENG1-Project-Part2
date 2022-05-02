@@ -144,7 +144,7 @@ public class GameController implements Screen {
         }
 
         do {
-            bossCollege = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[4], islandTexture,
+            bossCollege = new EnemyCollege(new Vector2(rd.nextInt((int) mapSize.x), rd.nextInt((int) mapSize.y)), collegeTextures[4], new Texture(Gdx.files.internal("img/islandBarrier.png")),
                     this, ProjectileDataHolder.boss, 200);
             isCollision = false;
             for (PhysicsObject current : physicsObjects) {

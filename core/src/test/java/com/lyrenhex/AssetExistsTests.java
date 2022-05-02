@@ -55,6 +55,7 @@ public class AssetExistsTests {
         assetTest("img/choppyWater2.png");
         assetTest("img/storm.png");
         assetTest("img/rocks.png");
+        assetTest("img/islandBarrier.png");
     }
     
     @Test

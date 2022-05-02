@@ -325,7 +325,7 @@ public class PlayerBoat extends Boat{
     public void enableBooster() {
         sprite.setTexture(new Texture(Gdx.files.internal("img/boosterOn.png")));
         Upgrade(Upgrades.speed, 100);
-        Upgrade(Upgrades.projectilespeed, 100);
+        Upgrade(Upgrades.projectilespeed, 2);
     }
 
     /**
