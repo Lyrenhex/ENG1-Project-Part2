@@ -47,3 +47,9 @@ More progress was made on all parts of the project and are almost complete.
 Implementation is complete and major progress was made on testing.
 
 ![gantt chart for 2022-04-29](/img/week8.png)
+
+### 2022-05-04
+
+All sections of the project were completed.
+
+![gantt chart for 2022-05-04](/img/week9.png)
