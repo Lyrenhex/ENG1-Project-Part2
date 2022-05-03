@@ -35,6 +35,7 @@ public class EnemyCollege extends College {
     GlyphLayout hpText;
     int maxHP;
     public boolean invulnerable;
+    boolean deadSpriteDrawn;
    
     public EnemyCollege(Vector2 position, Texture aliveTexture, Texture islandTexture,
                         GameController controller, ProjectileData projectileData, int maxHP)
@@ -121,6 +122,7 @@ public class EnemyCollege extends College {
         }
         else
             deadSprite.draw(batch);
+            deadSpriteDrawn = true;
     }
 
     /**
@@ -162,4 +164,11 @@ public class EnemyCollege extends College {
     public EnemyCollegeState getSaveState(int numBoats) {
         return new EnemyCollegeState(numBoats, invulnerable, position, aliveSprite.getTexture(), islandSprite.getTexture(), projectileType, maxHP, HP);
     }
+
+    public boolean getDeadSpriteDrawn(){
+        return this.deadSpriteDrawn;
+    }
+
+
+
 }
