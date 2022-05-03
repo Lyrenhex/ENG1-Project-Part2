@@ -15,4 +15,5 @@ This is our final layout of classes and inheritance
 These have been split up, due to the image being too large otherwise
 
 ![Concrete architecture 1](./img/concrete_architecture.png)
-![Concrete architecture 2](./img/concrete_architecture_2.png)
+![Concrete architecture 2](./img/concrete_architecture_1.png)
+![Concrete architecture 3](./img/concrete_architecture_2.png)
