@@ -15,6 +15,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import junit.framework.TestCase;
@@ -22,8 +24,9 @@ import org.junit.runner.RunWith;
 import org.w3c.dom.Text;
 
 @RunWith(GdxTestsRunner.class)
-public class EnemyCollegeTest extends TestCase {
 
+
+public class EnemyCollegeTest {
     EnemyCollege testCollege;
     eng1game testGame;
 

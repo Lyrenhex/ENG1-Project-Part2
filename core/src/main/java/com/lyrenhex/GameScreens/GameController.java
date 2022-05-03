@@ -43,7 +43,7 @@ public class GameController implements Screen {
     public ArrayList<PhysicsObject> physicsObjects;
     public ArrayList<College> colleges;
     public GameMap map;
-    public final Vector2 mapSize;
+    private final Vector2 mapSize;
     public PlayerBoat playerBoat;
     private EnemyCollege bossCollege;
     
