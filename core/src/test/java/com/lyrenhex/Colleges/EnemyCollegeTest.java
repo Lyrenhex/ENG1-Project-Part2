@@ -42,10 +42,4 @@ public class EnemyCollegeTest extends TestCase {
         testCollege.OnCollision(p);
         assertTrue(startHealth > testCollege.getHP());
     }
-
-
-
-
-
-
 }
