@@ -23,7 +23,7 @@ public class eng1game extends Game {
     SpriteBatch batch;
     Texture img;
     Menu menuScreen;
-    GameController gameScreen;
+    public GameController gameScreen;
 
     public String savePath;
     public String gameState;

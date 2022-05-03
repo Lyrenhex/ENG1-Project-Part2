@@ -335,5 +335,9 @@ public class PlayerBoat extends Boat{
     public PlayerBoatState getSaveState() {
         return new PlayerBoatState(HP, maxHP, speed, turnSpeed, defense, position, projectileDamageMultiplier, projectileSpeedMultiplier, hasExtraCannons, isImmune, timeImmune, projectileType, sprite.getTexture());
     }
+
+    public float getRotation() {
+        return rotation;
+    }
 }
 

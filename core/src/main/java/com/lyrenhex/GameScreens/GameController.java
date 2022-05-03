@@ -544,5 +544,12 @@ public class GameController implements Screen {
         xp += amount;
         plunder += amount;
     }
+    public PlayerBoat getPlayerBoat() {
+        return playerBoat;
+    }
+
+    public void addPhysicsObject(PhysicsObject obj) {
+        physicsObjects.add(obj);
+    }
 
 }
