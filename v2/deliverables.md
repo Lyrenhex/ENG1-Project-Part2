@@ -4,12 +4,19 @@ layout: v2
 
 [Executable JAR file](../jars/21direction.jar)
 
-## Deliverables as PDFs
+## New deliverables as PDFs
 
 - [Change report](../pdfs/Change2.pdf)
 - [Implementation](../pdfs/Impl2.pdf)
 - [Testing](../pdfs/Test2.pdf)
 - [Continuous Integration](../pdfs/CI2.pdf)
+
+## Updated deliverables as PDFs
+
+- [Requirements](../pdfs/Req2.pdf)
+- [Architecture](../pdfs/Arch2.pdf)
+- [Methods and plans](../pdfs/Plan2.pdf)
+- [Risk assessment and mitigation](../pdfs/Risk2.pdf)
 
 ### Source Code
 

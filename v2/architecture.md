@@ -7,17 +7,12 @@ layout: v2
 ### Diagram #1
 This is our final layout of classes and inheritance
 
-![plantuml class diagram](img/abstract_architecture_names_only.png)
+![Abstract architecture 1](./img/abstract_architecture.png)
+![Abstract architecture 2](./img/abstract_architecture_2.png)
 
 ### Concrete Architecture Diagrams
 
 These have been split up, due to the image being too large otherwise
 
-![Boats Diagram](img/concrete/Boats.png)
-![College Diagram](img/concrete/College.png)
-![GameGenerics Diagram](img/concrete/GameGenerics.png)
-![GameScreens Diagram](img/concrete/GameScreens.png)
-![GeneralControl Diagram](img/concrete/GeneralControl.png)
-![Level Diagram](img/concrete/Level.png)
-![Projectiles Diagram](img/concrete/Projectiles.png)
-![UI Diagram](img/concrete/UI.png)
+![Concrete architecture 1](./img/concrete_architecture.png)
+![Concrete architecture 2](./img/concrete_architecture_2.png)
