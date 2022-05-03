@@ -109,6 +109,10 @@ public class eng1game extends Game {
         gameScreen.setDifficulty(difficulty);
     }
 
+    public GameController getGameScreen(){
+        return this.gameScreen;
+    }
+
     @Override
     public void render () {
         super.render();

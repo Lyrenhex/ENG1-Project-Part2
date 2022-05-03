@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.graphics.GL20;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
@@ -11,6 +12,7 @@ import org.junit.runners.model.InitializationError;
 
 import java.util.HashMap;
 import java.util.Map;
+import static org.mockito.Mockito.mock;
 
 public class GdxTestsRunner extends BlockJUnit4ClassRunner implements ApplicationListener {
     private  final Map<FrameworkMethod, RunNotifier> instance = new HashMap<>();
@@ -25,6 +27,7 @@ public class GdxTestsRunner extends BlockJUnit4ClassRunner implements Applicatio
 
         // run the tests as a headless Gdx application.
         new HeadlessApplication(this, new HeadlessApplicationConfiguration());
+        Gdx.gl = mock(GL20.class);
     }
 
     @Override
